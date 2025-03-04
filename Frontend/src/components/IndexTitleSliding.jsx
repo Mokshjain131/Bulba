@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import '../styles/IndexTitleSliding.css';
+import '../styles/index.css';
 
 const IndexTitleSliding = () => {
     const cardsRef = useRef([]);
@@ -38,21 +38,6 @@ const IndexTitleSliding = () => {
             </div>
 
             <br /><br />
-
-            <div className="Index-FeatureContainer">
-                {/* Right Side Features */}
-                <div id="Index-feature4" className="Index-cardR" ref={(el) => (cardsRef.current[3] = el)}>
-                    <div className="Index-cardtitle">AI-Powered Market Research</div>
-                    <div className="Index-cardtext">Gain data-driven insights into market trends, customer preferences, and competitor analysis to refine your business strategy.</div>
-                </div>
-
-      
-
-                <div id="Index-feature6" className="Index-cardR" ref={(el) => (cardsRef.current[5] = el)}>
-                    <div className="Index-cardtitle">Marketing & Growth Playbook</div>
-                    <div className="Index-cardtext">AI suggests data-driven marketing strategies, content plans, and customer engagement tactics.</div>
-                </div>
-            </div>
         </div>
     );
 };
