@@ -1,69 +1,95 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/testimonial.css";
 
 const Testimonial = () => {
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const testimonials = [
+    {
+      content: "This AI assistant makes multilingual chats effortless! I connect with clients better and close more deals.",
+      author: "- Sharon David, Senior Agent"
+    },
+    {
+      content: "No more lost details! Every client's needs are captured, helping me personalize and win their trust.",
+      author: "- Aranck Jomraj, Broker"
+    },
+    {
+      content: "With AI-powered reminders and insights, I never miss a follow-up. It's like having a smart assistant!",
+      author: "- Moksh Jain, Real Estate Consultant"
+    }
+  ];
+
   useEffect(() => {
     const carousel = document.querySelector(".carousel");
-
+    
     const rotateCarousel = () => {
+      if (isAnimating) return;
+      setIsAnimating(true);
+      
       const cards = document.querySelectorAll(".card");
 
-      // Apply transitions and adjust positions for each card
-      const firstCard = cards[0];
-      const secondCard = cards[1];
-      const thirdCard = cards[2];
+      // Apply transitions with enhanced positioning
+      cards[0].style.transform = "translateY(120px) scale(0.85) translateZ(-50px)";
+      cards[0].style.opacity = "0.6";
+      cards[0].style.zIndex = "2";
+      cards[0].style.filter = "blur(1px)";
 
-      firstCard.style.transform = "translateY(100px) scale(0.85)";
-      firstCard.style.opacity = "0.5";
-      firstCard.style.zIndex = "2";
+      cards[1].style.transform = "translateY(-120px) scale(0.85) translateZ(-50px)";
+      cards[1].style.opacity = "0.6";
+      cards[1].style.zIndex = "1";
+      cards[1].style.filter = "blur(1px)";
 
-      secondCard.style.transform = "translateY(-100px) scale(0.85)";
-      secondCard.style.opacity = "0.5";
-      secondCard.style.zIndex = "1";
+      cards[2].style.transform = "translateY(0) scale(1) translateZ(0)";
+      cards[2].style.opacity = "1";
+      cards[2].style.zIndex = "3";
+      cards[2].style.filter = "blur(0)";
 
-      thirdCard.style.transform = "translateY(0px) scale(1)";
-      thirdCard.style.opacity = "1";
-      thirdCard.style.zIndex = "3";
-
-      // After the transition, move the first card to the end of the stack
+      // After the transition, move the first card to the end
       setTimeout(() => {
-        carousel.appendChild(firstCard);
-        // Re-select the updated cards
+        carousel.appendChild(cards[0]);
+        
+        // Reset positions for the new order
         const updatedCards = document.querySelectorAll(".card");
-        updatedCards[0].style.transform = "translateY(100px) scale(0.85)";
-        updatedCards[0].style.opacity = "0.5";
-        updatedCards[0].style.zIndex = "2";
-        updatedCards[1].style.transform = "translateY(0px) scale(1)";
+        updatedCards[0].style.transform = "translateY(-120px) scale(0.85) translateZ(-50px)";
+        updatedCards[0].style.opacity = "0.6";
+        updatedCards[0].style.zIndex = "1";
+        updatedCards[0].style.filter = "blur(1px)";
+        
+        updatedCards[1].style.transform = "translateY(0) scale(1) translateZ(0)";
         updatedCards[1].style.opacity = "1";
         updatedCards[1].style.zIndex = "3";
-        updatedCards[2].style.transform = "translateY(-100px) scale(0.85)";
-        updatedCards[2].style.opacity = "0.5";
-        updatedCards[2].style.zIndex = "1";
-      }, 1000); // Delay before reordering (increased for smoother feel)
-
+        updatedCards[1].style.filter = "blur(0)";
+        
+        updatedCards[2].style.transform = "translateY(120px) scale(0.85) translateZ(-50px)";
+        updatedCards[2].style.opacity = "0.6";
+        updatedCards[2].style.zIndex = "2";
+        updatedCards[2].style.filter = "blur(1px)";
+        
+        setIsAnimating(false);
+      }, 800);
     };
 
-    // Set interval to auto-rotate every 1.5 seconds
-    const intervalId = setInterval(rotateCarousel, 1500);
+    // Set interval for auto-rotation with a slightly longer delay for better readability
+    const intervalId = setInterval(rotateCarousel, 4000);
 
-    return () => clearInterval(intervalId); // Cleanup on component unmount
-  }, []);
+    return () => clearInterval(intervalId);
+  }, [isAnimating]);
 
   return (
     <div className="testimonialwrapper">
-    <div className="testimonials-section">
-      <div className="testimonials-title">Testimonials</div>
-      <div className="carousel-container">
-        <div className="carousel">
-          <div className="card">"This AI assistant makes multilingual chats effortless! 
-            I connect with clients better and close more deals."</div>
-          <div className="card">"No more lost details! Every client’s needs are captured, 
-            helping me personalize and win their trust."</div>
-          <div className="card">"With AI-powered reminders and insights, I never miss a follow-up. 
-            It’s like having a smart assistant!"</div>
+      <div className="testimonials-section">
+        <div className="testimonials-title">What Our Users Say</div>
+        <div className="carousel-container">
+          <div className="carousel">
+            {testimonials.map((testimonial, index) => (
+              <div className="card" key={index}>
+                <div className="card-content">"{testimonial.content}"</div>
+                <div className="card-author">{testimonial.author}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };

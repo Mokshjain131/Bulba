@@ -17,102 +17,144 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    padding: 20px;
-    border: 5px solid;
-    border-image-slice: 1;
+    min-height: 100vh;
+    width: 100%;
+    padding: 40px 0;
     
-    /* New Background */
+    /* Enhanced gradient background with animation */
     background: linear-gradient(135deg, #000000, #030b18, #040f20, #061224, #0b1d3a, #08182f);
     background-size: 400% 400%;
+    animation: richerBackground 15s ease infinite;
 }
-
-
-/* .testimonialwrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: #f5f7fa;
-    overflow: hidden;
-} */
 
 .testimonials-section {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 80%;
-    max-width: 1000px;
-    gap: 50px; /* Adjust spacing between title and carousel */
+    width: 90%;
+    max-width: 1200px;
+    gap: 40px;
 }
 
-/* Left Section - Title */
+/* Title Section */
 .testimonials-title {
-    flex: 1;
-    font-size: 3rem;
-    font-weight: 700;
-    color: #53b834;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 10px rgba(83, 184, 52, 0.5);
+    position: relative;
+    padding-bottom: 15px;
 }
 
-/* Right Section - Carousel */
+.testimonials-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #53b834, transparent);
+    border-radius: 2px;
+}
+
+/* Carousel Section */
 .carousel-container {
-    flex: 1;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    height: 250px; /* Ensures cards are centered */
-    perspective: 1000px;
+    height: 300px;
+    perspective: 1200px;
 }
 
 .carousel {
     position: relative;
-    width: 300px;
+    width: 100%;
+    max-width: 600px;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Ensures perfect vertical centering */
+    justify-content: center;
 }
 
 .card {
     position: absolute;
-    width: 320px;
-    height: 180px;
-    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    min-height: 200px;
+    border-radius: 20px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 1.3em;
-    font-weight: bold;
+    padding: 30px;
     color: white;
-    transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 1s ease-out; /* Smooth transition with cubic-bezier easing */
-    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.25);
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, rgba(15, 32, 39, 0.8), rgba(32, 58, 67, 0.9), rgba(44, 83, 100, 0.8));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Initial Card Positions */
+.card-content {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+}
+
+.card-author {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #53b834;
+    align-self: flex-end;
+    margin-top: 10px;
+}
+
+/* Initial Card Positions with improved scaling */
 .card:nth-child(1) {
-    transform: translateY(-100px) scale(0.85);
-    opacity: 0.5;
+    transform: translateY(-120px) scale(0.85) translateZ(-50px);
+    opacity: 0.6;
     z-index: 1;
+    filter: blur(1px);
 }
 
 .card:nth-child(2) {
-    transform: translateY(0px) scale(1);
+    transform: translateY(0) scale(1) translateZ(0);
     opacity: 1;
     z-index: 3;
+    filter: blur(0);
 }
 
 .card:nth-child(3) {
-    transform: translateY(100px) scale(0.85);
-    opacity: 0.5;
+    transform: translateY(120px) scale(0.85) translateZ(-50px);
+    opacity: 0.6;
     z-index: 2;
+    filter: blur(1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .testimonials-title {
+        font-size: 2.5rem;
+    }
+    
+    .card {
+        width: 85%;
+        padding: 20px;
+    }
+    
+    .card-content {
+        font-size: 1rem;
+    }
 }
