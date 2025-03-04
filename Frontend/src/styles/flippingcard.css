@@ -157,7 +157,7 @@
 
 .full-width-section {
     width: 100vw;
-    height: 60vh;
+    height: 90vh;
     position: relative;
     display: flex;
     justify-content: center;
@@ -182,7 +182,7 @@
   }
   
   .flip-card {
-      margin-top: 100px;
+      margin-top: 10px;
       width: 300px !important; 
       height: 350px;
       position: relative;
