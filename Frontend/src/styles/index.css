@@ -239,6 +239,7 @@ a {
     display: flex;
     justify-content: flex-end;
     margin: 60px;
+    align-items: center;
 }
 
 .Index-cardL, .Index-cardR {

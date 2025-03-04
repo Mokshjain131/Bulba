@@ -12,10 +12,11 @@
   
   .FeatureContainer {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 20px;
   }
   
+
   .cardL, .cardR {
     width: 230px;
     height: 300px;
