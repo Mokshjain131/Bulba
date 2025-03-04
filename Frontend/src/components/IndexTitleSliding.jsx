@@ -29,6 +29,10 @@ const IndexTitleSliding = () => {
                 <div id="Index-feature1" className="Index-cardL" ref={(el) => (cardsRef.current[1] = el)}>
                     <div className="Index-cardtitle">Smart Business Strategy</div>
                     <div className="Index-cardtext">Leverage AI-generated strategic advice tailored to your industry, helping you navigate product development, business models, and growth strategies.</div>
+                    <div className="cta-buttons">
+                        <a href="/chat" className="cta-button primary">Start Now</a>
+                        <a href="/features" className="cta-button secondary">See How It Works</a>
+                    </div>
                 </div>
             </div>
         </div>
