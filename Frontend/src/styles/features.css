@@ -1,0 +1,74 @@
+
+#Features{
+    padding: 20px;
+    margin: 0px;
+    margin-bottom: 30px;
+  }
+  
+  .FeatureContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .about-feature{
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+    color: white;
+    padding: 6rem 2rem;
+    text-align: center;
+    position: relative;
+    margin-bottom: 30px;
+  }
+  
+  .about-feature h1 {
+    font-size: 2rem; /* Adjust as needed */
+    font-weight: bold;
+  }
+  
+  .about-feature p {
+    font-size: 1rem; /* Adjust as needed */
+  }
+  
+  
+  .cardL, .cardR {
+    width: 230px;
+    height: 300px;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3),
+                0px 6px 20px rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+  
+    opacity: 0;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  
+  /* Left slide-in */
+  .cardL {
+    transform: translateX(-50px);
+  }
+  
+  .cardtitle{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 5px;
+  }
+  /* Right slide-in */
+  .cardR {
+    transform: translateX(50px);
+  }
+  
+  /* Apply visible class */
+  .cardL.visible, .cardR.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .cardtext{
+    text-align: left;
+    font-size: 15px;
+    margin: 5px;
+    margin-top: 10px;
+  }
+  

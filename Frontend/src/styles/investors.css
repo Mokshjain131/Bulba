@@ -1,0 +1,32 @@
+.investors-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #121212;
+    color: #fff;
+  }
+  
+  main {
+    flex: 1;
+  }
+  
+  .investors-hero {
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+    color: white;
+    padding: 6rem 2rem;
+    text-align: center;
+  }
+  
+  .investors-hero h1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .investors-hero p {
+    font-size: 1rem; 
+  }
+  
+  
+  
+  
+  

@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.CarouselWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px auto;
+    max-width: 800px;
+}
+
+
+.CarouselContainer {
+    width: 800px;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    background-color: #2a2d3e;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3),
+        0px 6px 20px rgba(255, 255, 255, 0.1);
+}
+
+
+.CarouselTrack {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+    
+}
+
+
+.CarouselSlide {
+    min-width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #37445c;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    padding: 10px;
+}
+
+
+.CarouselBtn {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 16px;
+    transition: background 0.3s;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3),
+    0px 6px 20px rgba(255, 255, 255, 0.1);
+}
+
+
+.CarouselBtn:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+
+.CarouselTitle{
+    font-size: bold;
+    font-size: xx-large;
+    padding: 5px;
+}
+
+
+.CarouselSub{
+    font-style: italic;
+    font-size: large;
+    padding: 5px;
+}
+#CarouselParent{
+    padding-top: 80px;
+    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 30px;
+    background-color: #f0f1f5;
+    width: 100%;
+}
+#CarouselTestimonial{
+    text-align: center;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-size: 2.5rem;
+}
