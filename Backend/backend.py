@@ -8,7 +8,8 @@ import os
 import supabase
 import faiss
 import numpy as np
-import firecrawl  # Assuming you have firecrawl installed
+import firecrawl
+import uvicorn
 
 # Load environment variables
 load_dotenv()
@@ -203,3 +204,6 @@ async def firecrawl_properties(firecrawl_request: FirecrawlRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred during Firecrawl: {str(e)}")
+    
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
