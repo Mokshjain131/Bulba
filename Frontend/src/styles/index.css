@@ -511,6 +511,7 @@ a {
   line-height: 1.5;
   margin-bottom: 2rem;
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  font-weight: 550;
 }
 
 /* Card Area - Right Side */
