@@ -42,6 +42,7 @@ function Index() {
   };
 
   return (
+    <>
     <div className="index-page">
     <div id="Index-Feature-Nav">
       <IndexNavbar />
@@ -77,8 +78,10 @@ function Index() {
 
         <Testimonial />
       </main>
-      <Footer />
+      
     </div>
+    <Footer />
+    </>
   );
 }
 
