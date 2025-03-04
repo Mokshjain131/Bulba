@@ -253,13 +253,18 @@ a {
     margin-bottom: 5px;
 }
 
-  #Index-Feature-Nav{
-    background-image: url('../assets/background.jpg');
-    background-size: cover;
-    background-position: bottom 60%;
-    background-attachment: fixed;
-    padding-bottom: 70px;
-  }
+#Index-Feature-Nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-position: bottom 60%;
+  background-attachment: fixed;
+  width: 100%;
+  min-height: 100vh; 
+}
 
 .Index-FeatureContainer {
     display: flex;
@@ -312,6 +317,7 @@ a {
   color: white;
   text-shadow: 0px 6px 15px rgba(0, 0, 0, 1), 0px 8px 30px rgba(255, 255, 255, 0.2);
   margin-right: 50vw;
+
 }
 
 
