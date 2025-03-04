@@ -27,8 +27,7 @@ const IndexTitleSliding = () => {
             <div className="Index-FeatureContainer">
                 {/* Left Side Features */}
                 <div id="IndexTitleOpener">
-                Real Estate 
-                AI
+                Real AI
                 </div>
                 <div id="Index-feature1" className="Index-cardL" ref={(el) => (cardsRef.current[1] = el)}>
                     <div className="Index-cardtitle">Smart Business Strategy</div>
