@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <nav className="navbar-container">
       <div className="navbar-logo">
-      <img src={logo} alt="StartupAI Logo" className="logo-image" />
+        <img src={logo} alt="StartupAI Logo" className="logo-image" />
       </div>
       <div className="navbar-menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
         &#9776;
@@ -19,6 +19,7 @@ const Navbar = () => {
         <li><Link to="/about">About</Link></li>
         <li><Link to="/features">Features</Link></li>
         <li><Link to="/contact">Contact</Link></li>
+        <li><Link to="/calender">Calendar</Link></li>
         <li><Link to="/investors">Investors</Link></li>
         <li><Link to="/chat">AI</Link></li>
         <li><Link to="/login">Login</Link></li>

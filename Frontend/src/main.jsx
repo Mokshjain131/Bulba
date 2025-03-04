@@ -13,7 +13,7 @@ import Chat from "./pages/chat";
 import CoFounder from "./pages/cofounder";
 import Login from "./pages/login";
 import Audio from "./pages/audio";
-
+import Calender from "./pages/calender";
 createRoot(document.getElementById('root')).render(
     <StrictMode>
         <BrowserRouter>
@@ -27,6 +27,7 @@ createRoot(document.getElementById('root')).render(
                 <Route path="/cofounder" element={<CoFounder />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/audio" element={<Audio />} />
+                <Route path="/calender" element={<Calender />} />
             </Routes>
         </BrowserRouter>
     </StrictMode>,
