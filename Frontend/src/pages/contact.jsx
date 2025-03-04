@@ -14,7 +14,7 @@ function Contact() {
       <main>
         <div id="contacttitlecss">
           <h1>Get in Touch</h1>
-          <p>Have questions? We&apos;re here to help you succeed.</p>
+          <p>We're here to answer your questions and help you leverage our AI solutions for your real estate business.</p>
         </div>
         <section className="contact-content">
           <div className="container">
