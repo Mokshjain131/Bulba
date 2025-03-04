@@ -262,7 +262,7 @@ a {
   align-items: center;
   background-image: url('../assets/background.jpg');
   background-size: cover;
-  background-position: bottom 60%;
+  background-position: 100% 8%;
   background-attachment: fixed;
   width: 100%;
   min-height: 100vh; 
@@ -524,7 +524,7 @@ a {
   width: 100%;
   max-width: 450px;
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(7px);
   border-radius: 12px;
   padding: 2.5rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
