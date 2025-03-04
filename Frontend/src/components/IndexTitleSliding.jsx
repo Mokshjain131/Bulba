@@ -26,12 +26,9 @@ const IndexTitleSliding = () => {
         <div id="Index-Features">
             <div className="Index-FeatureContainer">
                 {/* Left Side Features */}
-                <div id="Index-feature1" className="Index-cardL" ref={(el) => (cardsRef.current[0] = el)}>
-                    <div className="Index-cardtitle">AI-Powered Idea Validation</div>
-                    <div className="Index-cardtext">Get instant feedback on your startup idea with AI-driven market analysis, competitor insights, and customer demand assessment.</div>
-                </div>
+                hello
 
-                <div id="Index-feature2" className="Index-cardL" ref={(el) => (cardsRef.current[1] = el)}>
+                <div id="Index-feature1" className="Index-cardL" ref={(el) => (cardsRef.current[1] = el)}>
                     <div className="Index-cardtitle">Smart Business Strategy</div>
                     <div className="Index-cardtext">Leverage AI-generated strategic advice tailored to your industry, helping you navigate product development, business models, and growth strategies.</div>
                 </div>
