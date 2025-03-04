@@ -1,100 +1,70 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import "../styles/about.css";
 
 const About = () => {
-  const [visibleCards, setVisibleCards] = useState([]);
+  const cardsRef = useRef([]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const cards = document.querySelectorAll(".support-item");
-      const windowHeight = window.innerHeight;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            entry.target.style.transitionDelay = `${index * 0.15}s`;
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -50px 0px" }
+    );
 
-      cards.forEach((card, index) => {
-        const rect = card.getBoundingClientRect();
-        if (rect.top < windowHeight * 0.75) {
-          setVisibleCards((prev) => [...new Set([...prev, index])]);
-        }
-      });
-    };
+    cardsRef.current.forEach((card) => {
+      if (card) observer.observe(card);
+    });
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => observer.disconnect();
   }, []);
 
   return (
     <div className="about-page">
-      
-
-
-
-
-
-      <div className="background-dots">
-  {[...Array(20)].map((_, i) => (
-    <div 
-      key={i} 
-      className="dot" 
-      style={{
-        top: `${Math.random() * 100}vh`,
-        left: `${Math.random() * 100}vw`,
-        animationDuration: `${5 + Math.random() * 5}s`,
-        animationDelay: `${Math.random() * 3}s`
-      }}
-    ></div>
-  ))}
-</div>
-
       <Navbar />
-      <main>
-        <section className="about-hero">
-          <div className="hero-content">
-            <h1>Why StartupAI Exists</h1>
-            <p>Empowering solo founders with AI-driven support and guidance</p>
-          </div>
-        </section>
-
+      
+      <section className="about-content">
+        <div className="dot-pattern"></div>
         
-        <section className="how-it-works">
+        <div className="content-intro">
           <h2>How AI Supports Your Journey</h2>
-            <div className="support-grid">
-              {[
-                {
-                  title: "Validation",
-                  content:
-                    "AI analyzes market trends, evaluates industry demand, and assesses competition to help you validate your business idea. It provides insights based on real-world data, ensuring your idea is viable before investing resources. You’ll receive risk analysis, feasibility studies, and market-fit assessments powered by AI-driven algorithms.",
-                },
-                {
-                  title: "Scaling",
-                  content:
-                    "Once your business is established, AI assists in scaling by providing growth strategies tailored to your industry. AI-powered analytics help optimize pricing models, expand customer reach, and suggest operational efficiencies. Whether it’s automating workflows, improving marketing efforts, or identifying new market segments, StartupAI ensures sustainable and data-backed growth.",
-                },
-                {
-                  title: "Fundraising",
-                  content:
-                    "AI streamlines your fundraising journey by analyzing successful pitch decks, identifying investor preferences, and crafting compelling proposals. It connects you with potential investors by matching your startup with relevant funding opportunities. AI also helps refine financial projections and business plans, making your pitch more persuasive and investment-ready.",
-                },
-                {
-                  title: "Strategic Analysis",
-                  content:
-                    "StartupAI provides data-driven strategic analysis to help solo founders make informed decisions. By leveraging AI-powered insights, it evaluates market trends, competitor strategies, and growth opportunities tailored to your business. It also suggests optimal pricing models, positioning tactics, and expansion strategies to maximize your startup’s potential.",
-                },
-              ].map((item, index) => (
-                <div
-                  key={index}
-                  className={`support-item ${visibleCards.includes(index) ? "visible" : ""} ${index % 2 === 0 ? "slide-left" : "slide-right"}`}
-                >
-                  <h3>{item.title}</h3>
-                  <p>{item.content}</p>
-                </div>
-              ))}
-            </div>
+          <p>Discover how our AI solutions help founders at every stage of their startup journey</p>
+        </div>
         
-        </section>
-        
-      </main>
+        <div className="cards-container">
+          <div className="card-left" ref={(el) => (cardsRef.current[0] = el)}>
+            <span className="card-number">01</span>
+            <div className="card-title">Validation</div>
+            <div className="card-text">AI analyzes market trends, evaluates industry demand, and assesses competition to help you validate your business idea. It provides insights based on real-world data, ensuring your idea is viable before investing resources.</div>
+          </div>
+
+          <div className="card-right" ref={(el) => (cardsRef.current[1] = el)}>
+            <span className="card-number">02</span>
+            <div className="card-title">Scaling</div>
+            <div className="card-text">Once your business is established, AI assists in scaling by providing growth strategies tailored to your industry. AI-powered analytics help optimize pricing models, expand customer reach, and suggest operational efficiencies.</div>
+          </div>
+
+          <div className="card-left" ref={(el) => (cardsRef.current[2] = el)}>
+            <span className="card-number">03</span>
+            <div className="card-title">Fundraising</div>
+            <div className="card-text">AI streamlines your fundraising journey by analyzing successful pitch decks, identifying investor preferences, and crafting compelling proposals. It connects you with potential investors by matching your startup with relevant funding opportunities.</div>
+          </div>
+
+          <div className="card-right" ref={(el) => (cardsRef.current[3] = el)}>
+            <span className="card-number">04</span>
+            <div className="card-title">Strategic Analysis</div>
+            <div className="card-text">StartupAI provides data-driven strategic analysis to help solo founders make informed decisions. By leveraging AI-powered insights, it evaluates market trends, competitor strategies, and growth opportunities tailored to your business.</div>
+          </div>
+        </div>
+      </section>
+      
       <Footer />
     </div>
   );
