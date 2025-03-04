@@ -73,7 +73,7 @@
 }
 
 .flip-button:hover {
-    background-color: #ff4b5c; 
+    background-color: #605d35b3; 
     transform: scale(1.1);
 }
 
@@ -122,10 +122,14 @@
 /* Left side text */
 .text-section {
     width: 50%;
-    color: white;
+    color: rgb(239, 240, 230);
     text-align: left;
     padding-right: 40px;
     font-size: 20px;
+}
+
+.text-section h2{
+    color: white;
 }
 
 /* Right side card */
@@ -183,8 +187,8 @@
   
   .flip-card {
       margin-top: 10px;
-      width: 300px !important; 
-      height: 350px;
+      width: 250px !important; 
+      height: 290px;
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.6s;

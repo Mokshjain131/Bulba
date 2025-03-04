@@ -9,8 +9,12 @@ const FlippingCard = () => {
       <div className="content-container">
         {/* Text Section */}
         <div className="text-section">
-          <h2>This is an AI Bot</h2>
-          <p>It provides guidance, strategic insights, and smart business advice.</p>
+          <h2>Your Deal Closer!</h2>
+          <p>Imagine having a personal assistant that understands every client, speaks their language, 
+            and never forgets a detail. Our AI-powered Real Estate Chatbot is your 24/7 multilingual companion, 
+            helping you break language barriers, capture key client preferences, and ensure no opportunity slips through the cracks. 
+            Whether you're negotiating, following up, or seeking instant insights, this chatbot makes every conversation smarter, faster, 
+            and more effective—so you can focus on closing deals, not chasing details!</p>
         </div>
 
         {/* Card Section */}
@@ -18,12 +22,11 @@ const FlippingCard = () => {
           <div className="flip-card">
             <div className="flip-card-inner">
               <div className="flip-card-front">
-                <h4>AI-Powered Assistance</h4><br/>
-                <p>Struggling to build your startup alone? We've got your back.</p>
+                <h4>Conversations made smarter</h4><br/>
+                <p>—your AI assistant is just a tap away!</p>
               </div>
               <div className="flip-card-back">
-                <h4>Chat with Your AI Advisor</h4><br/>
-                <p>Instant guidance, smart strategies, and growth insights.</p>
+                <p>Your multilingual real estate partner is ready. Let’s chat!</p>
                 <Link to="/chat">
                   <button className="flip-button">Start Chat</button>
                 </Link>

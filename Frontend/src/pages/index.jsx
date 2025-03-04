@@ -56,16 +56,19 @@ function Index() {
           <h2>How AI Empowers Your Journey</h2>
           <div className="features-grid">
             <div className="feature-card">
-              <h3>Idea Validation</h3>
-              <p>AI-powered market analysis and feasibility testing</p>
+              <h3>Seamless Multilingual Communication</h3>
+              <p>AI enables smooth conversations across Hindi, Marathi, Telugu, 
+                English, and more, ensuring nothing gets lost in translation.</p>
             </div>
             <div className="feature-card">
-              <h3>Strategic Planning</h3>
-              <p>Get data-driven insights for business growth</p>
+              <h3>Smart Conversation Insights</h3>
+              <p>AI captures and analyzes key client preferences, 
+                helping agents understand buyer needs instantly.</p>
             </div>
             <div className="feature-card">
-              <h3>Investor Connect</h3>
-              <p>AI-assisted pitch deck creation and investor matching</p>
+              <h3>Real-Time Assistance</h3>
+              <p>AI suggests responses, provides market insights, 
+                and enhances negotiation strategies on the go.</p>
             </div>
           </div>
         </section>
