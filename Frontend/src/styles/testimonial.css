@@ -2,103 +2,94 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-
-.CarouselWrapper {
+.testimonialwrapper {
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin: 10px auto;
-    max-width: 800px;
-}
-
-
-.CarouselContainer {
-    width: 800px;
-    height: 200px;
+    align-items: center;
+    height: 100vh;
+    background: #f5f7fa;
     overflow: hidden;
+}
+
+.testimonials-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 1000px;
+    gap: 50px; /* Adjust spacing between title and carousel */
+}
+
+/* Left Section - Title */
+.testimonials-title {
+    flex: 1;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2a2a2a;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Right Section - Carousel */
+.carousel-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
-    border-radius: 10px;
-    background-color: #2a2d3e;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3),
-        0px 6px 20px rgba(255, 255, 255, 0.1);
+    height: 250px; /* Ensures cards are centered */
+    perspective: 1000px;
 }
 
-
-.CarouselTrack {
-    display: flex;
-    transition: transform 0.4s ease-in-out;
-    
-}
-
-
-.CarouselSlide {
-    min-width: 100%;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background: #37445c;
-    color: white;
-    font-size: 14px;
-    text-align: center;
-    padding: 10px;
-}
-
-
-.CarouselBtn {
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    font-size: 16px;
-    transition: background 0.3s;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3),
-    0px 6px 20px rgba(255, 255, 255, 0.1);
-}
-
-
-.CarouselBtn:hover {
-    background: rgba(255, 255, 255, 0.4);
-}
-
-
-.CarouselTitle{
-    font-size: bold;
-    font-size: xx-large;
-    padding: 5px;
-}
-
-
-.CarouselSub{
-    font-style: italic;
-    font-size: large;
-    padding: 5px;
-}
-#CarouselParent{
-    padding-top: 80px;
-    margin-top: 90px;
+.carousel {
+    position: relative;
+    width: 300px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding-bottom: 30px;
-    background-color: #f0f1f5;
-    width: 100%;
+    justify-content: center; /* Ensures perfect vertical centering */
 }
-#CarouselTestimonial{
+
+.card {
+    position: absolute;
+    width: 280px;
+    height: 150px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-  margin-bottom: 1rem;
-  color: #2c3e50;
-  font-size: 2.5rem;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: white;
+    transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 1s ease-out; /* Smooth transition with cubic-bezier easing */
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+/* Initial Card Positions */
+.card:nth-child(1) {
+    transform: translateY(-100px) scale(0.85);
+    opacity: 0.5;
+    z-index: 1;
+}
+
+.card:nth-child(2) {
+    transform: translateY(0px) scale(1);
+    opacity: 1;
+    z-index: 3;
+}
+
+.card:nth-child(3) {
+    transform: translateY(100px) scale(0.85);
+    opacity: 0.5;
+    z-index: 2;
 }
