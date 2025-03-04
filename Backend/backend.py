@@ -238,5 +238,151 @@ def firecrawl_search(query):
     response = requests.get(FIRECRAWL_API_ENDPOINT, headers=headers, params=params)
     return response.json()
 
+
+@app.post("/login/")
+async def login(request: Request):
+    try:
+        # Extract email and password from the request body
+        body = await request.json()
+        email = body.get('email')
+        password = body.get('password')
+
+        if not email or not password:
+            raise HTTPException(status_code=400, detail="Email and password are required")
+
+        data = {
+            'email': email,
+            'password': password
+        }
+
+        response = requests.post(
+            f'{supabase_url}/auth/v1/token',
+            headers={
+                'Content-Type': 'application/json',
+                'apikey': supabase_key,
+                'Authorization': f'Bearer {supabase_key}'
+            },
+            json={
+                'grant_type': 'password',
+                'email': email,
+                'password': password
+            }
+        )
+
+        if response.status_code == 200:
+            return response.json()  # Return the response from Supabase
+        else:
+            raise HTTPException(status_code=response.status_code, detail=response.json())
+
+    except Exception as e:
+        logging.error(f"Login error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/signup/")
+async def signup(request: Request):
+    try:
+        # Extract email and password from the request body
+        body = await request.json()
+        email = body.get('email')
+        password = body.get('password')
+
+        if not email or not password:
+            raise HTTPException(status_code=400, detail="Email and password are required")
+
+        data = {
+            'email': email,
+            'password': password
+        }
+
+        response = requests.post(
+            f'{supabase_url}/auth/v1/signup',
+            headers={
+                'Content-Type': 'application/json',
+                'apikey': supabase_key,
+                'Authorization': f'Bearer {supabase_key}'
+            },
+            json=data
+        )
+
+        if response.status_code == 200:
+            return response.json()  # Return the response from Supabase
+        else:
+            raise HTTPException(status_code=response.status_code, detail=response.json())
+
+    except Exception as e:
+        logging.error(f"Sign-up error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+class OAuthProvider(BaseModel):
+    provider: str
+    redirect_to: Optional[str] = None
+
+@app.post("/auth/oauth")
+async def oauth_signin(provider_data: OAuthProvider):
+    try:
+        provider = provider_data.provider
+        redirect_to = provider_data.redirect_to or redirect_url
+
+        if not provider:
+            raise HTTPException(status_code=400, detail="Provider is required")
+
+        # Request OAuth URL from Supabase
+        response = requests.post(
+            f'{supabase_url}/auth/v1/authorize',
+            headers={
+                'Content-Type': 'application/json',
+                'apikey': supabase_key,
+                'Authorization': f'Bearer {supabase_key}'
+            },
+            json={
+                'provider': provider,
+                'redirect_to': redirect_to
+            }
+        )
+
+        if response.status_code == 200:
+            data = response.json()
+            # Return the OAuth URL that the frontend should redirect to
+            return {"url": data.get("url")}
+        else:
+            raise HTTPException(status_code=response.status_code, detail=response.json())
+
+    except Exception as e:
+        logging.error(f"OAuth error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Optional: Callback endpoint to handle the OAuth redirect
+@app.get("/auth/callback")
+async def oauth_callback(code: str = None, error: str = None):
+    if error:
+        return {"error": error}
+
+    if not code:
+        return {"error": "No code provided"}
+
+    try:
+        # Exchange code for session
+        response = requests.post(
+            f'{supabase_url}/auth/v1/token',
+            headers={
+                'Content-Type': 'application/json',
+                'apikey': supabase_key,
+                'Authorization': f'Bearer {supabase_key}'
+            },
+            json={
+                'grant_type': 'authorization_code',
+                'code': code
+            }
+        )
+
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {"error": response.json()}
+
+    except Exception as e:
+        logging.error(f"OAuth callback error: {e}")
+        return {"error": str(e)}
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
