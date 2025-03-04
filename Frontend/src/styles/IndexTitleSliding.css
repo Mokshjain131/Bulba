@@ -1,6 +1,4 @@
-
-
-#Features{
+#Index-Features {
     padding: 20px;
     margin: 0px;
     margin-bottom: 30px;
@@ -8,15 +6,15 @@
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-  }
-  
-  .FeatureContainer {
+}
+
+.Index-FeatureContainer {
     display: flex;
     justify-content: center;
     gap: 20px;
-  }
-  
-  .cardL, .cardR {
+}
+
+.Index-cardL, .Index-cardR {
     width: 230px;
     height: 300px;
     background: white;
@@ -27,38 +25,38 @@
   
     opacity: 0;
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
 
-  }
-  
-  /* Left slide-in */
-  .cardL {
+/* Left slide-in */
+.Index-cardL {
     transform: translateX(-50px);
-  }
-  
-  .cardtitle{
+}
+
+.Index-cardtitle {
     text-align: center;
     font-size: 18px;
     font-weight: bold;
     margin: 5px;
-  }
-  /* Right slide-in */
-  .cardR {
+}
+
+/* Right slide-in */
+.Index-cardR {
     transform: translateX(50px);
-  }
-  
-  /* Apply visible class */
-  .cardL.visible, .cardR.visible {
+}
+
+/* Apply visible class */
+.Index-cardL.visible, .Index-cardR.visible {
     opacity: 1;
     transform: translateX(0);
-  }
-  
-  .cardtext{
+}
+
+.Index-cardtext {
     text-align: left;
     font-size: 15px;
     margin: 5px;
     margin-top: 10px;
-  }
-  
-  #feature1{
+}
+
+#Index-feature1 {
     width: 50vw;
-  }
+}
