@@ -2,11 +2,16 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(135deg, #000000, #030b18, #040f20, #061224, #0b1d3a, #08182f);
+    background-size: 400% 400%;
+    animation: richerBackground 12s ease-in-out infinite;
   }
-  
-  main {
-    flex: 1;
-  }
+
+.contact-content{
+  background: linear-gradient(135deg, #000000, #030b18, #040f20, #061224, #0b1d3a, #08182f);
+    background-size: 400% 400%;
+    animation: richerBackground 12s ease-in-out infinite;
+}
   
   .contact-hero {
     background: linear-gradient(135deg, #1a2a6c, #b21f1f);
@@ -141,3 +146,15 @@
     }
   }
   
+
+
+
+  @keyframes richerBackground {
+    0% { background-position: 0% 0%; }
+    25% { background-position: 30% 40%; }
+    50% { background-position: 70% 60%; }
+    75% { background-position: 40% 80%; }
+    100% { background-position: 0% 0%; }
+}
+
+

@@ -6,7 +6,6 @@ import '../styles/contact.css';
 function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
   };
 
   return (
