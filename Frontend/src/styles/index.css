@@ -248,14 +248,18 @@ a {
   
 
   #Index-Features {
-    padding: 20px;
+    padding: 50px;
     margin: 0px;
     margin-bottom: 5px;
-    background-image: url('https://images2.alphacoders.com/433/43302.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
 }
+
+  #Index-Feature-Nav{
+    background-image: url('../assets/background.jpg');
+    background-size: cover;
+    background-position: bottom 60%;
+    background-attachment: fixed;
+    padding-bottom: 70px;
+  }
 
 .Index-FeatureContainer {
     display: flex;
