@@ -26,6 +26,27 @@ const About = () => {
 
   return (
     <div className="about-page">
+      
+
+
+
+
+
+      <div className="background-dots">
+  {[...Array(20)].map((_, i) => (
+    <div 
+      key={i} 
+      className="dot" 
+      style={{
+        top: `${Math.random() * 100}vh`,
+        left: `${Math.random() * 100}vw`,
+        animationDuration: `${5 + Math.random() * 5}s`,
+        animationDelay: `${Math.random() * 3}s`
+      }}
+    ></div>
+  ))}
+</div>
+
       <Navbar />
       <main>
         <section className="about-hero">
