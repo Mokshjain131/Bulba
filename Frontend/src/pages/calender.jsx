@@ -137,7 +137,7 @@ const Calendar = () => {
       
       <div className="calendar-container">
         <div className="calendar-header">
-          <h1>Event Calendar</h1>
+          <h1>Real Estate Appointment Calendar</h1>
           <p>Manage your appointments and schedule</p>
         </div>
         
