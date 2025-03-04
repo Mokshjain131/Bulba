@@ -36,13 +36,16 @@ const SlidingCards = () => {
             <div className="FeatureContainer">
                 {/* Left Side Features */}
                 <div id="feature1" className="cardL" ref={(el) => (cardsRef.current[0] = el)}>
-                    <div className="cardtitle">AI-Powered Idea Validation</div>
-                    <div className="cardtext">Get instant feedback on your startup idea with AI-driven market analysis, competitor insights, and customer demand assessment.</div>
+                    <div className="cardtitle">AI-Powered Multilingual Chat & Speech Recognition</div>
+                    <div className="cardtext">Agents can communicate seamlessly with clients in multiple languages, including Hindi, Marathi, Telugu, and English. 
+                        The assistant uses AI to detect and translate conversations in real time, ensuring smooth communication without language barriers. 
+                        It can also handle mixed-language conversations, making interactions more natural and effective.</div>
                 </div>
 
                 <div id="feature2" className="cardL" ref={(el) => (cardsRef.current[1] = el)}>
-                    <div className="cardtitle">Smart Business Strategy</div>
-                    <div className="cardtext">Leverage AI-generated strategic advice tailored to your industry, helping you navigate product development, business models, and growth strategies.</div>
+                    <div className="cardtitle">Automated Conversation Insights</div>
+                    <div className="cardtext">The assistant captures key details from client conversations, summarizes them, and highlights important preferences. 
+                        Letting agents can quickly recall what matters most to each client without manually taking notes.</div>
                 </div>
             </div>
 
@@ -51,18 +54,21 @@ const SlidingCards = () => {
             <div className="FeatureContainer">
                 {/* Right Side Features */}
                 <div id="feature4" className="cardR" ref={(el) => (cardsRef.current[3] = el)}>
-                    <div className="cardtitle">AI-Powered Market Research</div>
-                    <div className="cardtext">Gain data-driven insights into market trends, customer preferences, and competitor analysis to refine your business strategy.</div>
+                    <div className="cardtitle">Smart Follow-Up & Reminders</div>
+                    <div className="cardtext">No lead goes cold with automated follow-ups. The assistant schedules reminders based on conversation history and client interest levels. 
+                        Agents receive timely notifications to check in with prospects.</div>
                 </div>
 
                 <div id="feature5" className="cardR" ref={(el) => (cardsRef.current[4] = el)}>
-                    <div className="cardtitle">Fundraising & Investor Insights</div>
-                    <div className="cardtext">AI helps refine your pitch, generate business plans, and connect with relevant investors.</div>
+                    <div className="cardtitle">Real-Time AI Assistance for Negotiations</div>
+                    <div className="cardtext">The assistant provides real-time suggestions, such as property options based on client needs, or market trends. 
+                        This helps agents handle objections and offer better deals.</div>
                 </div>
 
                 <div id="feature6" className="cardR" ref={(el) => (cardsRef.current[5] = el)}>
-                    <div className="cardtitle">Marketing & Growth Playbook</div>
-                    <div className="cardtext">AI suggests data-driven marketing strategies, content plans, and customer engagement tactics.</div>
+                    <div className="cardtitle">Seamless CRM Integration & Data Management</div>
+                    <div className="cardtext">The tool integrates with existing Customer Relationship Management systems to track client interactions and manage leads efficiently. 
+                        This ensures that client information is organized and accessible for future reference.</div>
                 </div>
             </div>
         </div>
