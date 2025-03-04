@@ -1,11 +1,11 @@
 a {
     font-weight: 500;
-    color: #ff4b5c;
+    color: #dfa921;
     text-decoration: inherit;
   }
   
   a:hover {
-    color: #ff4b5c;
+    color: #dfa921;
   }
   
   #root {
@@ -96,14 +96,26 @@ a {
   }
   
   .cta-button.primary {
-    background-color: #ff4b5c;
+    background-color: #dfa921;
     color: white;
+    border: none;
+  }
+  
+  .cta-button.primary:hover {
+    background-color: #edb424;
+    transform: translateY(-2px);
   }
   
   .cta-button.secondary {
-    background-color: rgb(255, 157, 0);
-    border: 2px solid #ff4b5c;
+    background-color: transparent;
     color: white;
+    border: 1px solid #dfa921;
+  }
+  
+  .cta-button.secondary:hover {
+    background-color: rgba(223, 169, 33, 0.1);
+    border-color: #edb424;
+    transform: translateY(-2px);
   }
   
 
@@ -158,10 +170,17 @@ a {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
     margin-bottom: 20px;
+    
+    /* Updated border */
+    border: 3px solid #dfa921;
+    box-shadow: 0px 0px 5px #dfa921;
+
+    /* Animation */
+    animation: goldSilverGlow 3s infinite alternate;
   }
   
   .feature-card h3 {
-    color: #2c3e50;
+    color: #dfa921;
     margin-bottom: 1rem;
   }
   
@@ -328,9 +347,9 @@ a {
 
 
 @keyframes goldSilverGlow {
-  0% { border-color: gold; box-shadow: 0 0 5px gold; }
-  50% { border-color: silver; box-shadow: 0 0 10px silver; }
-  100% { border-color: gold; box-shadow: 0 0 5px gold; }
+  0% { border-color: #dfa921; box-shadow: 0 0 5px #dfa921; }
+  50% { border-color: #edb424; box-shadow: 0 0 10px #edb424; }
+  100% { border-color: #dfa921; box-shadow: 0 0 5px #dfa921; }
 }
 
 .feature-card {
@@ -342,9 +361,9 @@ a {
   margin-bottom: 80px;
   margin-top: 50px;
   
-  /* Initial border */
-  border: 3px solid gold;
-  box-shadow: 0px 0px 5px gold;
+  /* Updated border */
+  border: 3px solid #dfa921;
+  box-shadow: 0px 0px 5px #dfa921;
 
   /* Animation */
   animation: goldSilverGlow 3s infinite alternate;
@@ -571,25 +590,25 @@ a {
 }
 
 .cta-button.primary {
-  background-color: #ff4b5c;
+  background-color: #dfa921;
   color: white;
   border: none;
 }
 
 .cta-button.primary:hover {
-  background-color: #e6435a;
+  background-color: #edb424;
   transform: translateY(-2px);
 }
 
 .cta-button.secondary {
   background-color: transparent;
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid #dfa921;
 }
 
 .cta-button.secondary:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(223, 169, 33, 0.1);
+  border-color: #edb424;
   transform: translateY(-2px);
 }
 
