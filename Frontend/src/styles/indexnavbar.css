@@ -13,7 +13,7 @@
 
 .index-navbar-logo {
     font-size: 24px;
-    color: #ff4b5c;
+    color: #dfa921;
     margin-left: 20px;
 }
 
@@ -41,12 +41,12 @@
 }
 
 .index-navbar-links a:hover {
-    background: #ff4b5c;
+    background: #eec663;
     color: white;
 }
 
 .index-navbar-links a.active {
-    background: #ff4b5c;
+    background: #dfa921;
 }
 
 .index-navbar-menu-icon {
