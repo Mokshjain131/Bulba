@@ -128,27 +128,9 @@ a {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   .features-preview {
     padding: 4rem 2rem;
-    background-color: #1a1a2e;
+    background-color: rgba(0, 0, 255, 0);
   }
   
   .features-preview h2 {
