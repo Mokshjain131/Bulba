@@ -33,6 +33,7 @@ app = FastAPI()
 # Eleven Labs API settings
 ELEVEN_LABS_API_ENDPOINT = "https://api.elevenlabs.io/v1/transcribe"
 
+# Initialize global variable
 transcription_result = None
 
 # Supabase Client
@@ -51,7 +52,7 @@ def chunk_text(text, chunk_size=500):
 def get_embedding(text):
     """Generates embeddings for the given text."""
     result = genai.embed_content(
-        model="models/embedding-001",
+        model="embedding-001",  # Fixed model name
         content=text,
         task_type="retrieval_query"
     )
@@ -79,10 +80,11 @@ def retrieve_chunks(index, chunks, query, k=3):
 
     results = []
     for i, idx in enumerate(indices[0]):
-        results.append({
-            "content": chunks[idx],
-            "score": scores[0][i]
-        })
+        if idx < len(chunks):  # Add check to prevent index out of bounds
+            results.append({
+                "content": chunks[idx],
+                "score": scores[0][i]
+            })
 
     return results
 
@@ -186,17 +188,22 @@ async def firecrawl_properties(firecrawl_request: FirecrawlRequest):
     """Scrapes real estate websites based on bullet points."""
     try:
         # Use Gemini to extract location and property type from bullet points
-        prompt = f"From the following bullet points: '{firecrawl_request.bullet_points}', extract the location and property type."
+        prompt = f"From the following bullet points: '{firecrawl_request.bullet_points}', extract the location and property type. Format your response exactly like this: 'Location: [location], Property Type: [property type]'"
         location_property_response = MODEL.generate_content(prompt)
         location_property_text = location_property_response.text
-        # Parse the location and property type from the response. This part needs robust parsing.
-        # Example: "Location: New York, Property Type: Apartment"
-        location = "New York" #Replace with better parsing.
-        property_type="Apartment" #Replace with better parsing.
+        
+        # Improved parsing logic
+        try:
+            location_part = location_property_text.split("Location:")[1].split(",")[0].strip()
+            property_type_part = location_property_text.split("Property Type:")[1].strip()
+        except (IndexError, AttributeError):
+            # Fallback if parsing fails
+            location_part = "New York"
+            property_type_part = "Apartment"
 
         # Use Firecrawl to scrape properties
         results = firecrawl_client.search(
-            query=f"{property_type} in {location}",
+            query=f"{property_type_part} in {location_part}",
             category="real_estate"
         )
         return results
