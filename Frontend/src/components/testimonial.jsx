@@ -55,9 +55,12 @@ const Testimonial = () => {
       <div className="testimonials-title">Testimonials</div>
       <div className="carousel-container">
         <div className="carousel">
-          <div className="card">"Amazing experience!"</div>
-          <div className="card">"Best service ever!"</div>
-          <div className="card">"Would recommend 100%"</div>
+          <div className="card">"This AI assistant makes multilingual chats effortless! 
+            I connect with clients better and close more deals."</div>
+          <div className="card">"No more lost details! Every client’s needs are captured, 
+            helping me personalize and win their trust."</div>
+          <div className="card">"With AI-powered reminders and insights, I never miss a follow-up. 
+            It’s like having a smart assistant!"</div>
         </div>
       </div>
     </div>
