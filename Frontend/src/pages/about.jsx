@@ -32,7 +32,7 @@ const About = () => {
 
 
 
-      {/* <div className="background-dots">
+      <div className="background-dots">
   {[...Array(20)].map((_, i) => (
     <div 
       key={i} 
@@ -45,7 +45,7 @@ const About = () => {
       }}
     ></div>
   ))}
-</div> */}
+</div>
 
       <Navbar />
       <main>
