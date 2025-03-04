@@ -3,12 +3,14 @@ import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import Testimonial from "../components/testimonial";
 import FlippingCard from "../components/FlippingCard";
+import SlidingCards from "../components/SlidingCards";
 import '../styles/index.css';
 
 function Index() {
   return (
     <div className="home">
       <Navbar />
+      <SlidingCards />
       <main>
         <section className="hero">
           <div className="hero-content">

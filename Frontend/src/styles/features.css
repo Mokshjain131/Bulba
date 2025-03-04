@@ -10,25 +10,7 @@
     justify-content: center;
     gap: 20px;
   }
-  
-  .about-feature{
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f);
-    color: white;
-    padding: 6rem 2rem;
-    text-align: center;
-    position: relative;
-    margin-bottom: 30px;
-  }
-  
-  .about-feature h1 {
-    font-size: 2rem; /* Adjust as needed */
-    font-weight: bold;
-  }
-  
-  .about-feature p {
-    font-size: 1rem; /* Adjust as needed */
-  }
-  
+
   
   .cardL, .cardR {
     width: 230px;
@@ -72,3 +54,6 @@
     margin-top: 10px;
   }
   
+  #feature1{
+    width: 50vw;
+  }

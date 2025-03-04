@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import Navbar from "../components/navbar";
-import Footer from "../components/footer";
+import React, { useEffect, useRef } from "react";
 import '../styles/features.css';
-import { useEffect, useRef } from "react";
 
 const SlidingCards = () => {
     const cardsRef = useRef([]);
@@ -26,12 +23,6 @@ const SlidingCards = () => {
     }, []);
 
     return (
-      <div>
-        <Navbar />
-        <section className="about-feature">
-          <h1>Unlocking Startup Potential</h1>
-          <p>AI-powered solutions to guide solo founders from idea to execution.</p>
-        </section>
         <div id="Features">
             <div className="FeatureContainer">
                 {/* Left Side Features */}
@@ -66,8 +57,6 @@ const SlidingCards = () => {
                 </div>
             </div>
         </div>
-        <Footer />
-      </div>
     );
 };
 
