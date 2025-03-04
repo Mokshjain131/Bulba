@@ -106,6 +106,46 @@ a {
     color: white;
   }
   
+
+  
+
+
+
+
+.features-preview {
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(0.95); 
+    transition: opacity 1.5s ease-out, filter 1.5s ease-out, transform 1.5s ease-out;
+}
+
+.features-preview.visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1); 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   .features-preview {
     padding: 4rem 2rem;
     background-color: #1a1a2e;
