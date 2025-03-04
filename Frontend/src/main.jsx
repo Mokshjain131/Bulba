@@ -12,6 +12,7 @@ import Investors from "./pages/investors";
 import Chat from "./pages/chat";
 import CoFounder from "./pages/cofounder";
 import Login from "./pages/login";
+import Audio from "./pages/audio";
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')).render(
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/cofounder" element={<CoFounder />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/audio" element={<Audio />} />
             </Routes>
         </BrowserRouter>
     </StrictMode>,

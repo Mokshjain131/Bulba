@@ -20,20 +20,28 @@ function VirtualCallRecorder() {
       mediaRecorder.current.onstop = async () => {
         const audioBlob = new Blob(audioChunks.current, { type: 'audio/webm' });
         audioChunks.current = []; // Clear chunks
-
-        const formData = new FormData();
-        formData.append('audioFile', audioBlob, 'recording.webm');
-
-        try {
-          await axios.post('/upload-audio', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          console.log('Recording uploaded successfully');
-        } catch (error) {
-          console.error('Error uploading recording:', error);
-        }
+      
+        const reader = new FileReader();
+        reader.onload = async () => {
+          try {
+            const response = await fetch('http://localhost:8000/upload-audio', {
+              method: 'POST',
+              body: reader.result,
+              headers: {
+                'Content-Type': 'audio/webm',
+              },
+            });
+      
+            if (response.ok) {
+              console.log('Recording uploaded successfully');
+            } else {
+              console.error('Error uploading recording:', response.status);
+            }
+          } catch (error) {
+            console.error('Error uploading recording:', error);
+          }
+        };
+        reader.readAsBinaryString(audioBlob);
       };
 
       mediaRecorder.current.start();

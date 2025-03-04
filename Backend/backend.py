@@ -1,4 +1,5 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import shutil
 import requests
@@ -10,14 +11,16 @@ import faiss
 import numpy as np
 import firecrawl
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware # Import CORSMiddleware
 
 # Load environment variables
 load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 ELEVEN_LABS_API_KEY = os.getenv("ELEVEN_LABS_API_KEY")
 SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+SUPABASE_KEY = os.getenv("SUPABASE_ANON_KEY")
 FIRECRAWL_API_KEY = os.getenv("FIRECRAWL_KEY")
+FIRECRAWL_API_ENDPOINT = "https://api.firecrawl.com/v1/search"
 
 # Configure Gemini
 genai.configure(api_key=GOOGLE_API_KEY)
@@ -31,6 +34,15 @@ MODEL = genai.GenerativeModel(
 
 app = FastAPI()
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (for development, consider specifying origins in production)
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
+
 # Eleven Labs API settings
 ELEVEN_LABS_API_ENDPOINT = "https://api.elevenlabs.io/v1/transcribe"
 
@@ -39,9 +51,6 @@ transcription_result = None
 
 # Supabase Client
 supabase_client = supabase.create_client(SUPABASE_URL, SUPABASE_KEY)
-
-# Firecrawl Client
-firecrawl_client = firecrawl.Client(FIRECRAWL_API_KEY)
 
 def chunk_text(text, chunk_size=500):
     """Chunks the text into smaller segments."""
@@ -114,6 +123,17 @@ def generate_rag_response(text, query, k=3):
         "response": response.text
     }
 
+def firecrawl_search(query):
+    headers = {
+        "Authorization": f"Bearer {FIRECRAWL_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    params = {
+        "query": query
+    }
+    response = requests.get(FIRECRAWL_API_ENDPOINT, headers=headers, params=params)
+    return response.json()
+
 class QueryRequest(BaseModel):
     query: str
     text: str #transcribed text
@@ -127,15 +147,14 @@ async def rag_query(query_request: QueryRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
-@app.post("/upload-audio")
-async def upload_audio(audio_file: UploadFile = File(...)):
-    """Uploads an audio file, transcribes it, and stores embeddings."""
+@app.post("/upload-audio") # Removed unnecessary api_route and set method to POST as default
+async def upload_audio(file: UploadFile = File(...)): # Changed request to UploadFile
     global transcription_result
     try:
         # Save the audio file
         file_path = "recorded_audio.webm"
         with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(audio_file.file, buffer)
+            shutil.copyfileobj(file.file, buffer)
 
         # Prepare for Eleven Labs API
         with open(file_path, "rb") as audio:
@@ -155,12 +174,12 @@ async def upload_audio(audio_file: UploadFile = File(...)):
                 embeddings = get_embedding(chunk)
                 supabase_client.table("text_embeddings").insert({"text_chunk": chunk, "embeddings": embeddings}).execute()
 
-            return {"filename": audio_file.filename, "message": "Transcription and embeddings stored successfully"}
+            return {"filename": file.filename, "message": "Transcription and embeddings stored successfully"}
         else:
-            return {"filename": audio_file.filename, "error": f"Failed to transcribe audio: {response.status_code} - {response.text}"}
+            return {"filename": file.filename, "error": f"Failed to transcribe audio: {response.status_code} - {response.text}"}
 
     except Exception as e:
-        return {"filename": audio_file.filename, "error": f"An error occurred: {str(e)}"}
+        return {"filename": file.filename, "error": f"An error occurred: {str(e)}"}
 
 @app.post("/generate-response")
 async def generate_response():
@@ -186,10 +205,9 @@ class FirecrawlRequest(BaseModel):
 
 @app.post("/firecrawl-properties")
 async def firecrawl_properties(firecrawl_request: FirecrawlRequest):
-    """Scrapes real estate websites based on bullet points."""
     try:
         # Use Gemini to extract location and property type from bullet points
-        prompt = f"From the following bullet points: '{firecrawl_request.bullet_points}', extract the location and property type. Format your response exactly like this: 'Location: [location], Property Type: [property type]'"
+        prompt = f"From the following bullet points: '{firecrawl_request.bullet_points}', extract the location and property type. Format your response exactly like this: 'Location: [location], Property Type: [property_type]'"
         location_property_response = MODEL.generate_content(prompt)
         location_property_text = location_property_response.text
         
@@ -203,14 +221,22 @@ async def firecrawl_properties(firecrawl_request: FirecrawlRequest):
             property_type_part = "Apartment"
 
         # Use Firecrawl to scrape properties
-        results = firecrawl_client.search(
-            query=f"{property_type_part} in {location_part}",
-            category="real_estate"
-        )
+        results = firecrawl_search(f"{property_type_part} in {location_part}")
         return results
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred during Firecrawl: {str(e)}")
-    
+
+def firecrawl_search(query):
+    headers = {
+        "Authorization": f"Bearer {FIRECRAWL_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    params = {
+        "query": query
+    }
+    response = requests.get(FIRECRAWL_API_ENDPOINT, headers=headers, params=params)
+    return response.json()
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
