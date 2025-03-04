@@ -462,4 +462,183 @@ a {
   animation: moveDots 10s linear infinite alternate;
 }
 
+/* Hero Section - Clean and Modern */
+.hero-section {
+  width: 100%;
+  height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  /* No background here - let the parent's background image shine through */
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+}
+
+/* Title Area - Left Side */
+.title-area {
+  max-width: 600px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.title-area.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.main-title {
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Area - Right Side */
+.card-area {
+  width: 40%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.feature-card-hero {
+  width: 100%;
+  max-width: 450px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+}
+
+.feature-card-hero.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.feature-card-hero h3 {
+  font-size: 1.8rem;
+  color: white;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+}
+
+.feature-card-hero p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+/* CTA Buttons - Clean and Simple */
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.cta-button {
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.cta-button.primary {
+  background-color: #ff4b5c;
+  color: white;
+  border: none;
+}
+
+.cta-button.primary:hover {
+  background-color: #e6435a;
+  transform: translateY(-2px);
+}
+
+.cta-button.secondary {
+  background-color: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cta-button.secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 0 5%;
+  }
+  
+  .title-area {
+    max-width: 100%;
+    margin-bottom: 3rem;
+  }
+  
+  .main-title {
+    font-size: 3.5rem;
+  }
+  
+  .card-area {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .feature-card-hero {
+    max-width: 500px;
+  }
+  
+  .cta-buttons {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 2.8rem;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .feature-card-hero {
+    padding: 2rem;
+  }
+  
+  .feature-card-hero h3 {
+    font-size: 1.5rem;
+  }
+}
+
 
