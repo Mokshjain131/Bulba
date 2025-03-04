@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+pydantic
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+requests
+shutil
+dotenv
+supabase
+faiss-cpu
+numpy
+firecrawl
+elevenlabs
