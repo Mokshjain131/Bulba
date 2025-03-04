@@ -154,7 +154,16 @@
   }
   
 
-
+#contacttitlecss{
+  padding: 60px;
+  padding-bottom: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  text-align: center;
+  gap: 10px;
+}
 
   @keyframes richerBackground {
     0% { background-position: 0% 0%; }

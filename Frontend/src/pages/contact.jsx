@@ -12,11 +12,10 @@ function Contact() {
     <div className="contact-page">
       <Navbar />
       <main>
-        <section className="contact-hero">
+        <div id="contacttitlecss">
           <h1>Get in Touch</h1>
           <p>Have questions? We&apos;re here to help you succeed.</p>
-        </section>
-
+        </div>
         <section className="contact-content">
           <div className="container">
             <div className="contact-grid">
