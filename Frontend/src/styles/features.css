@@ -1,72 +1,220 @@
-#Features{
-    padding: 20px;
-    margin: 0px;
-    margin-bottom: 30px;
-  }
-  
-  .FeatureContainer {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  } 
-
-  
-  
-  .cardL, .cardR {
-    width: 300px;
-    height: 300px;
-    background: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3),
-                0px 6px 20px rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 20px;
-  
-    opacity: 0;
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-
-    border: 5px solid;
-    border-image-source: linear-gradient(45deg, #FFD700, #C0C0C0);
-    border-image-slice: 1;
-    animation: gradientBorder 6s infinite linear;
-    
-  }
-
-  @keyframes gradientBorder {
-    0% { border-image-source: linear-gradient(45deg, #FFD700, #C0C0C0); }
-    50% { border-image-source: linear-gradient(45deg, #C0C0C0, #FFD700); }
-    100% { border-image-source: linear-gradient(45deg, #FFD700, #C0C0C0); }
+/* Base styling */
+body {
+  margin: 0;
+  padding: 0;
 }
-  
-  
-  /* Left slide-in */
-  .cardL {
-    transform: translateX(-50px);
+
+/* Hero section styling */
+.about-feature {
+  background: linear-gradient(135deg, #030b18, #061224, #0b1d3a);
+  color: white;
+  padding: 100px 20px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-feature::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 60%);
+  z-index: 1;
+}
+
+.about-feature h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(to right, #d4af37, #fff, #d4af37);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.about-feature p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  color: #c0c0c0;
+  position: relative;
+  z-index: 2;
+}
+
+/* Features section styling */
+#Features {
+  background: linear-gradient(135deg, #000000, #030b18, #040f20, #061224);
+  padding: 80px 20px;
+  position: relative;
+}
+
+.features-intro {
+  text-align: center;
+  margin-bottom: 60px;
+  color: white;
+}
+
+.features-intro h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: #d4af37;
+}
+
+.features-intro p {
+  max-width: 700px;
+  margin: 0 auto;
+  color: #a0a0a0;
+  line-height: 1.6;
+}
+
+.FeatureContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto 60px;
+}
+
+.cardL, .cardR {
+  width: 340px;
+  min-height: 280px;
+  background: rgba(11, 29, 58, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 30px;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.cardL::before, .cardR::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  opacity: 0.7;
+}
+
+/* Left slide-in */
+.cardL {
+  transform: translateY(40px);
+}
+
+/* Right slide-in */
+.cardR {
+  transform: translateY(40px);
+}
+
+/* Apply visible class */
+.cardL.visible, .cardR.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cardtitle {
+  color: #d4af37;
+  text-align: left;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.cardtext {
+  color: #e0e0e0;
+  text-align: left;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.feature-icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.feature-number {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: rgba(212, 175, 55, 0.1);
+  line-height: 1;
+}
+
+/* Featured card */
+#feature1 {
+  width: 710px;
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(11, 29, 58, 0.8), rgba(6, 18, 36, 0.8));
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+#feature1 .cardtitle {
+  font-size: 1.5rem;
+}
+
+/* Features grid layout for better organization */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 30px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Ensure 3 columns on larger screens */
+@media (min-width: 1100px) {
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Subtle dot pattern background */
+.dot-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(rgba(212, 175, 55, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .about-feature h1 {
+    font-size: 2.2rem;
   }
   
-  .cardtitle{
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    margin: 5px;
-  }
-  /* Right slide-in */
-  .cardR {
-    transform: translateX(50px);
+  .about-feature p {
+    font-size: 1rem;
   }
   
-  /* Apply visible class */
-  .cardL.visible, .cardR.visible {
-    opacity: 1;
-    transform: translateX(0);
+  #feature1 {
+    width: 340px;
   }
   
-  .cardtext{
-    text-align: left;
-    font-size: 15px;
-    margin: 5px;
-    margin-top: 10px;
+  .features-intro h2 {
+    font-size: 1.8rem;
   }
-  
-  #feature1{
-    width: 50vw;
-  }
+}
