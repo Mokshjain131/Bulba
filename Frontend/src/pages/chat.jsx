@@ -163,36 +163,6 @@ function Chat() {
                             Search
                         </button>
                     </div>
-
-                    <div className="input-container">
-                        <div id="GeneralPurposeFlex">
-                        <h3>Business Idea Input:</h3>
-                        </div>
-                        <input
-                            type="text"
-                            value={businessIdea}
-                            onChange={(e) => setBusinessIdea(e.target.value)}
-                            placeholder="Enter your business idea..."
-                        />
-                        <button
-                            onClick={validateIdea}
-                            disabled={!businessIdea.trim()}
-                        >
-                            Validate Idea
-                        </button>
-                        <button
-                            onClick={getStrategicAdvice}
-                            disabled={!businessIdea.trim()}
-                        >
-                            Get Strategic Advice
-                        </button>
-                        <button
-                            onClick={getScalingAdvice}
-                            disabled={!businessIdea.trim()}
-                        >
-                            Get Scaling Advice
-                        </button>
-                    </div>
                 </div>
             </div>
             <br />
