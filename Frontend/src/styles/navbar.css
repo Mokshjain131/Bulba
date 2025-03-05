@@ -1,4 +1,3 @@
-
 .navbar-container {
     position: relative;
     top: 0;
@@ -27,10 +26,9 @@
     justify-content: space-evenly; 
 }
 
-
 .navbar-links li {
     display: inline-block;
-    width: 111px; 
+    width: 100px;
 }
 
 .navbar-links a {
@@ -51,7 +49,6 @@
 .navbar-links a.active {
     background: #edb424;
 }
-
 
 .navbar-menu-icon {
     display: none;
@@ -90,7 +87,6 @@
         display: block;
     }
 }
-
 
 .logo-image {
     height: 50px;
