@@ -6,7 +6,6 @@ const IndexTitleSliding = () => {
     const cardRef = useRef(null);
 
     useEffect(() => {
-        // Immediately start the animations when component mounts
         const timer = setTimeout(() => {
             if (titleRef.current) {
                 titleRef.current.classList.add("slide-in");
@@ -14,7 +13,7 @@ const IndexTitleSliding = () => {
             if (cardRef.current) {
                 cardRef.current.classList.add("slide-in");
             }
-        }, 100); // Small delay to ensure DOM is ready
+        }, 100);
 
         return () => clearTimeout(timer);
     }, []);
@@ -23,7 +22,7 @@ const IndexTitleSliding = () => {
         <div className="index-hero-section">
             <div className="index-hero-content">
                 <div className="index-title-area" ref={titleRef}>
-                    <h1 className="index-main-title">Real Estate AI</h1>
+                    <h1 className="index-main-title">Realty Lingo</h1>
                     <p className="index-subtitle">Transforming client interactions with intelligent conversation analysis</p>
                 </div>
                 

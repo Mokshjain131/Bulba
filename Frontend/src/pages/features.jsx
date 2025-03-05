@@ -26,7 +26,6 @@ const SlidingCards = () => {
         return () => observer.disconnect();
     }, []);
 
-    // Feature icons (using SVG for better quality)
     const renderIcon = (name) => {
         switch(name) {
             case "multilingual":
@@ -130,7 +129,6 @@ const SlidingCards = () => {
                     <div className="cardtext">Integrate with existing Customer Relationship Management systems to track client interactions and manage leads efficiently. Client information stays organized and accessible for future reference.</div>
                 </div>
 
-                {/* New Feature Card 1 */}
                 <div id="feature7" className="cardL" ref={(el) => (cardsRef.current[5] = el)}>
                     {renderIcon("analytics")}
                     <span className="feature-number">06</span>
@@ -138,7 +136,6 @@ const SlidingCards = () => {
                     <div className="cardtext">Gain valuable insights into your client interactions with detailed analytics. Track conversation metrics, client engagement levels, and conversion rates to optimize your approach and improve results over time.</div>
                 </div>
 
-                {/* New Feature Card 2 */}
                 <div id="feature8" className="cardR" ref={(el) => (cardsRef.current[6] = el)}>
                     {renderIcon("security")}
                     <span className="feature-number">07</span>

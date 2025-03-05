@@ -11,9 +11,9 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-section">
           <div className="footer-logo-container">
-            <img src={logo} alt="StartUP AI Logo" id="footerlogosquare" />
-            <div className="footer-tagline">Empowering real estate through AI</div>
-            <p>Transforming client interactions with intelligent conversation analysis and insights.</p>
+            <img src={logo} alt="RealtyLingo Logo" id="footerlogosquare" />
+            <div className="footer-tagline">Breaking Language Barriers in Real Estate</div>
+            <p>Transforming real estate communication with intelligent multilingual solutions.</p>
           </div>
         </div>
         
@@ -39,7 +39,7 @@ const Footer = () => {
         
         <div className="footer-section">
           <h4>Connect With Us</h4>
-          <p>Email: support@startupai.com</p>
+          <p>Email: contact@realtylingo.com</p>
           <p>Phone: (555) 123-4567</p>
           <div id="FooterSocials">
             <div className="FooterIconGrid">
@@ -56,7 +56,7 @@ const Footer = () => {
               </div>
               
               <div className="FooterIconContainer">
-                <a href="mailto:support@startupai.com" aria-label="Email">
+                <a href="mailto:contact@realtylingo.com" aria-label="Email">
                   <svg viewBox="0 0 24 24"><path d="M 4 4 C 2.895 4 2 4.895 2 6 L 2 18 C 2 19.105 2.895 20 4 20 L 20 20 C 21.105 20 22 19.105 22 18 L 22 6 C 22 4.895 21.105 4 20 4 L 4 4 z M 5.5976562 6 L 18.402344 6 L 12 10 L 5.5976562 6 z M 5 8.6269531 L 12 13 L 19 8.6269531 L 19 18 L 5 18 L 5 8.6269531 z"></path></svg>
                 </a>
               </div>
@@ -84,7 +84,7 @@ const Footer = () => {
       </div>
       
       <div className="footer-bottom">
-        <p>&copy; {currentYear} StartUP AI. All rights reserved.</p>
+        <p>&copy; {currentYear} RealtyLingo. All rights reserved.</p>
       </div>
     </footer>
   );

@@ -21,12 +21,11 @@ function Index() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Run on mount in case it's already in view
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Function to generate random dots
   const generateDots = () => {
     const dots = [];
     for (let i = 0; i < 50; i++) {

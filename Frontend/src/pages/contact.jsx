@@ -14,7 +14,7 @@ function Contact() {
       <main>
         <div id="contacttitlecss">
           <h1>Get in Touch</h1>
-          <p>We're here to answer your questions and help you leverage our AI solutions for your real estate business.</p>
+          <p>We're here to help you break language barriers in your real estate business.</p>
         </div>
         <section className="contact-content">
           <div className="container">
@@ -44,7 +44,7 @@ function Contact() {
                   <div className="info-item">
                     <div>
                       <h3>Email</h3>
-                      <p>support@startupai.com</p>
+                      <p>contact@realtylingo.com</p>
                     </div>
                   </div>
                   
