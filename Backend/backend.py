@@ -95,7 +95,7 @@ app.add_middleware(
 )
 
 # Eleven Labs API settings
-ELEVEN_LABS_API_ENDPOINT = "https://api.elevenlabs.io/v1/transcribe"
+ELEVEN_LABS_API_ENDPOINT = "https://api.elevenlabs.io/v1/audio/transcribe"
 
 # Initialize global variable
 transcription_result = None
@@ -208,11 +208,17 @@ async def upload_audio(file: UploadFile = File(...)):
 
         # Prepare for Eleven Labs API
         with open(file_path, "rb") as audio:
-            headers = {
-                "Authorization": f"Bearer {ELEVEN_LABS_API_KEY}",
-                "Content-Type": "application/octet-stream"
+            files = {
+                'audio': ('audio.webm', audio, 'audio/webm')
             }
-            response = requests.post(ELEVEN_LABS_API_ENDPOINT, headers=headers, data=audio.read())
+            headers = {
+                "xi-api-key": ELEVEN_LABS_API_KEY  # Changed from "Authorization"
+            }
+            response = requests.post(
+                ELEVEN_LABS_API_ENDPOINT,
+                headers=headers,
+                files=files
+            )
 
         if response.status_code == 200:
             transcription_result = response.json()
@@ -226,6 +232,9 @@ async def upload_audio(file: UploadFile = File(...)):
 
             return {"filename": file.filename, "message": "Transcription and embeddings stored successfully"}
         else:
+            print(f"Eleven Labs API Error: Status {response.status_code}")
+            print(f"Response: {response.text}")
+            print(f"Headers: {response.headers}")
             return {"filename": file.filename, "error": f"Failed to transcribe audio: {response.status_code} - {response.text}"}
 
     except Exception as e:
