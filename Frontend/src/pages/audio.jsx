@@ -1,52 +1,75 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import "../styles/audio.css";
-import { createFFmpeg } from '@ffmpeg/ffmpeg';
 
 const VirtualCallRecorder = () => {
   const [isRecording, setIsRecording] = useState(false);
-  const [isConverting, setIsConverting] = useState(false);
   const mediaRecorder = useRef(null);
   const audioChunks = useRef([]);
-  const ffmpeg = useRef(null);
 
-  // Initialize FFmpeg
-  useEffect(() => {
-    const loadFFmpeg = async () => {
-      ffmpeg.current = createFFmpeg({ log: false });
-      await ffmpeg.current.load();
-    };
-    loadFFmpeg();
-  }, []);
-
-  const convertWebmToMp3 = async (webmBlob) => {
+  const convertToMp3 = async (audioData) => {
     try {
-      setIsConverting(true);
-      const inputName = 'input.webm';
-      const outputName = 'output.mp3';
+      // Create an audio context
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      
+      // Convert audio data to buffer
+      const audioBuffer = await audioContext.decodeAudioData(await audioData.arrayBuffer());
+      
+      // Get audio data
+      const channels = audioBuffer.numberOfChannels;
+      const sampleRate = audioBuffer.sampleRate;
+      const samples = audioBuffer.getChannelData(0); // Get first channel
 
-      // Write the blob to FFmpeg's virtual filesystem
-      const arrayBuffer = await webmBlob.arrayBuffer();
-      ffmpeg.current.FS('writeFile', inputName, new Uint8Array(arrayBuffer));
-
-      // Run the conversion
-      await ffmpeg.current.run('-i', inputName, '-vn', '-acodec', 'libmp3lame', '-q:a', '2', outputName);
-
-      // Read the result
-      const data = ffmpeg.current.FS('readFile', outputName);
-      const mp3Blob = new Blob([data.buffer], { type: 'audio/mp3' });
-
-      // Clean up files from memory
-      ffmpeg.current.FS('unlink', inputName);
-      ffmpeg.current.FS('unlink', outputName);
-
+      // Create WAV file
+      const wavBuffer = await audioBufferToWav(audioBuffer);
+      
+      // Create Blob as MP3
+      const mp3Blob = new Blob([wavBuffer], { type: 'audio/mp3' });
+      console.log('Successfully converted to MP3');
       return mp3Blob;
     } catch (error) {
       console.error('Error converting to MP3:', error);
       throw error;
-    } finally {
-      setIsConverting(false);
+    }
+  };
+
+  // Helper function to convert AudioBuffer to WAV
+  const audioBufferToWav = (buffer) => {
+    const length = buffer.length * 2;
+    const data = new DataView(new ArrayBuffer(44 + length));
+
+    // WAV Header
+    writeString(data, 0, 'RIFF');
+    data.setUint32(4, 36 + length, true);
+    writeString(data, 8, 'WAVE');
+    writeString(data, 12, 'fmt ');
+    data.setUint32(16, 16, true);
+    data.setUint16(20, 1, true);
+    data.setUint16(22, 1, true);
+    data.setUint32(24, buffer.sampleRate, true);
+    data.setUint32(28, buffer.sampleRate * 2, true);
+    data.setUint16(32, 2, true);
+    data.setUint16(34, 16, true);
+    writeString(data, 36, 'data');
+    data.setUint32(40, length, true);
+
+    // Write audio data
+    const samples = new Float32Array(buffer.getChannelData(0));
+    let offset = 44;
+    for (let i = 0; i < samples.length; i++) {
+      const sample = Math.max(-1, Math.min(1, samples[i]));
+      data.setInt16(offset, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
+      offset += 2;
+    }
+
+    return data.buffer;
+  };
+
+  // Helper function to write strings to DataView
+  const writeString = (view, offset, string) => {
+    for (let i = 0; i < string.length; i++) {
+      view.setUint8(offset + i, string.charCodeAt(i));
     }
   };
 
@@ -68,13 +91,13 @@ const VirtualCallRecorder = () => {
           const audioBlob = new Blob(audioChunks.current, { type: 'audio/webm' });
           audioChunks.current = []; // Clear chunks
 
-          console.log('Converting WebM to MP3...');
-          const mp3Blob = await convertWebmToMp3(audioBlob);
+          console.log('Converting to MP3...');
+          const mp3Blob = await convertToMp3(audioBlob);
           
-          console.log('Uploading MP3 file...');
           const formData = new FormData();
           formData.append('file', mp3Blob, 'audio.mp3');
 
+          console.log('Uploading MP3 file...');
           const response = await fetch('http://localhost:8000/upload-audio', {
             method: 'POST',
             body: formData,
@@ -83,8 +106,7 @@ const VirtualCallRecorder = () => {
           if (response.ok) {
             console.log('Recording uploaded successfully');
           } else {
-            const errorData = await response.json();
-            console.error('Error uploading recording:', errorData);
+            console.error('Error uploading recording:', response.status);
           }
         } catch (error) {
           console.error('Error processing recording:', error);
@@ -127,21 +149,20 @@ const VirtualCallRecorder = () => {
             <div className="recorder-buttons">
               <button 
                 onClick={startRecording} 
-                disabled={isRecording || isConverting}
-                className={`record-button ${(isRecording || isConverting) ? 'disabled' : ''}`}
+                disabled={isRecording}
+                className={`record-button ${isRecording ? 'disabled' : ''}`}
               >
                 Start Recording
               </button>
               <button 
                 onClick={stopRecording} 
-                disabled={!isRecording || isConverting}
-                className={`stop-button ${(!isRecording || isConverting) ? 'disabled' : ''}`}
+                disabled={!isRecording}
+                className={`stop-button ${!isRecording ? 'disabled' : ''}`}
               >
                 Stop Recording
               </button>
             </div>
             {isRecording && <div className="recording-indicator">Recording in progress...</div>}
-            {isConverting && <div className="recording-indicator">Converting audio...</div>}
           </div>
         </div>
       </div>
