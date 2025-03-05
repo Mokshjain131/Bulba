@@ -97,7 +97,7 @@ const VirtualCallRecorder = () => {
           </div>
         </div>
       </div>
-      
+    
       <Footer />
     </div>
   );

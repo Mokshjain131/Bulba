@@ -3,7 +3,7 @@ import IndexNavbar from "../components/indexnavbar";
 import Footer from "../components/footer";
 import Testimonial from "../components/testimonial";
 import FlippingCard from "../components/FlippingCard";
-import IndexSlidingCards from "../components/IndexTitleSliding";
+import IndexTitleSliding from "../components/IndexTitleSliding";
 import "../styles/index.css";
 
 function Index() {
@@ -47,12 +47,9 @@ function Index() {
     <div id="Index-Feature-Nav">
       <IndexNavbar />
       <div className="background-dots">{generateDots()}</div>
-      
-      <IndexSlidingCards />
+      <IndexTitleSliding />
       </div>
       <main>
-        
-
         <section className={`features-preview ${isVisible ? "visible" : ""}`}>
           <h2>How AI Empowers Your Journey</h2>
           <div className="features-grid">
