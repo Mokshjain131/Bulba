@@ -35,10 +35,12 @@ const VirtualCallRecorder = () => {
           if (response.ok) {
             console.log('Recording uploaded successfully');
           } else {
-            console.error('Error uploading recording:', response.status);
+            console.error('Error uploading recording:', response.status, await response.text());
           }
         } catch (error) {
-          console.error('Error uploading recording:', error);
+          console.error('Network error:', error);
+          // Show user-friendly error message
+          alert('Unable to connect to the server. Please make sure the backend is running.');
         }
       };
 
