@@ -12,41 +12,33 @@ function Chat() {
         setMessages(prev => [
             ...prev,
             { type: 'user', content: searchQuery }
-        ]);
+        ])
 
-        try {
-            const response = await fetch('http://localhost:8000/ai/', { // Changed to http://
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    query: searchQuery,
-                    // k: 2 Removed unnecessary parameter
-                }),
-            });
-
-            if (!response.ok) { //check if the response status is okay
-                const errorData = await response.json()
-                throw new Error(`Server returned ${response.status}: ${errorData.detail}`); //throw and error
-            }
-
-            const data = await response.json();
-
+        const response = await fetch('https://pterodactyl-backend.onrender.com/ai/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: searchQuery,
+                k: 2
+            })
+        })
+        const data = await response.json()
+        
+        if (data.success) {
             const cleanedResponse = data.response.replace(/\*/g, '');
             setMessages(prev => [
                 ...prev,
-                { type: 'assistant', content: cleanedResponse }
-            ]);
-        } catch (error) {
-            console.error("Error in fetchLinks:", error);
+                { type: 'assistant', content: cleanedResponse } 
+            ])
+        } else {
             setMessages(prev => [
                 ...prev,
-                { type: 'assistant', content: `An error occurred while fetching the response: ${error.message}` } //more specific error message
-            ]);
-        } finally {
-            setSearchQuery('');
+                { type: 'assistant', content: "An error occurred while fetching the response." }
+            ])
         }
+        setSearchQuery('') 
     }
 
     return (
