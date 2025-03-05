@@ -4,7 +4,7 @@ import Footer from "../components/footer";
 import "../styles/about.css";
 
 const About = () => {
-  const cardsRef = useRef([]);
+  const sectionsRef = useRef([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -16,11 +16,11 @@ const About = () => {
           }
         });
       },
-      { threshold: 0.2, rootMargin: "0px 0px -50px 0px" }
+      { threshold: 0.2 }
     );
 
-    cardsRef.current.forEach((card) => {
-      if (card) observer.observe(card);
+    sectionsRef.current.forEach((section) => {
+      if (section) observer.observe(section);
     });
 
     return () => observer.disconnect();
@@ -30,37 +30,62 @@ const About = () => {
     <div className="about-page">
       <Navbar />
       
+      <section className="about-hero">
+        <div className="hero-content" ref={(el) => (sectionsRef.current[0] = el)}>
+          <h1>About RealtyLingo</h1>
+          <p>Breaking Language Barriers in Real Estate</p>
+        </div>
+      </section>
+      
       <section className="about-content">
         <div className="dot-pattern"></div>
         
-        <div className="content-intro">
-          <h2>How AI Supports Your Journey</h2>
-          <p>Discover how our AI solutions help founders at every stage of their startup journey</p>
+        <div className="story-section" ref={(el) => (sectionsRef.current[1] = el)}>
+          <h2>Our Story</h2>
+          <p>Founded in 2005, RealtyLingo emerged from a simple observation: the real estate industry was losing valuable connections due to language barriers. Our founders, experienced in both real estate and AI technology, saw an opportunity to bridge this gap and create meaningful conversations between agents and their diverse clientele.</p>
         </div>
         
-        <div className="cards-container">
-          <div className="card-left" ref={(el) => (cardsRef.current[0] = el)}>
-            <span className="card-number">01</span>
-            <div className="card-title">Validation</div>
-            <div className="card-text">AI analyzes market trends, evaluates industry demand, and assesses competition to help you validate your business idea. It provides insights based on real-world data, ensuring your idea is viable before investing resources.</div>
-          </div>
+        <div className="mission-section" ref={(el) => (sectionsRef.current[2] = el)}>
+          <h2>Our Mission</h2>
+          <p>At RealtyLingo, we're committed to transforming real estate communication through innovative AI solutions. We believe that language should never be a barrier to finding the perfect home or closing a deal. Our mission is to empower real estate professionals with tools that make multilingual communication effortless and natural.</p>
+        </div>
+        
+        <div className="values-section" ref={(el) => (sectionsRef.current[3] = el)}>
+          <h2>Our Values</h2>
+          <div className="values-grid">
+            <div className="value-card">
+              <h3>Innovation</h3>
+              <p>We continuously push the boundaries of AI technology to create solutions that make a real difference in the real estate industry.</p>
+            </div>
+            
+            <div className="value-card">
+              <h3>Inclusivity</h3>
+              <p>We believe in creating tools that make real estate accessible to everyone, regardless of their native language or cultural background.</p>
+            </div>
+            
+            <div className="value-card">
+              <h3>Excellence</h3>
+              <p>We're committed to delivering the highest quality AI solutions that our clients can rely on for their most important conversations.</p>
+            </div>
 
-          <div className="card-right" ref={(el) => (cardsRef.current[1] = el)}>
-            <span className="card-number">02</span>
-            <div className="card-title">Scaling</div>
-            <div className="card-text">Once your business is established, AI assists in scaling by providing growth strategies tailored to your industry. AI-powered analytics help optimize pricing models, expand customer reach, and suggest operational efficiencies.</div>
           </div>
-
-          <div className="card-left" ref={(el) => (cardsRef.current[2] = el)}>
-            <span className="card-number">03</span>
-            <div className="card-title">Fundraising</div>
-            <div className="card-text">AI streamlines your fundraising journey by analyzing successful pitch decks, identifying investor preferences, and crafting compelling proposals. It connects you with potential investors by matching your startup with relevant funding opportunities.</div>
-          </div>
-
-          <div className="card-right" ref={(el) => (cardsRef.current[3] = el)}>
-            <span className="card-number">04</span>
-            <div className="card-title">Strategic Analysis</div>
-            <div className="card-text">StartupAI provides data-driven strategic analysis to help solo founders make informed decisions. By leveraging AI-powered insights, it evaluates market trends, competitor strategies, and growth opportunities tailored to your business.</div>
+        </div>
+        
+        <div className="impact-section" ref={(el) => (sectionsRef.current[4] = el)}>
+          <h2>Our Impact</h2>
+          <div className="impact-stats">
+            <div className="stat-card">
+              <span className="stat-number">50+</span>
+              <span className="stat-label">Languages Supported</span>
+            </div>
+            <div className="stat-card">
+              <span className="stat-number">1000+</span>
+              <span className="stat-label">Real Estate Agents</span>
+            </div>
+            <div className="stat-card">
+              <span className="stat-number">50K+</span>
+              <span className="stat-label">Conversations Facilitated</span>
+            </div>
           </div>
         </div>
       </section>
