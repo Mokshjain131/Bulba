@@ -203,18 +203,24 @@ async def rag_query(query_request: QueryRequest):
 async def upload_audio(file: UploadFile = File(...)):
     try:
         # Save the audio file
-        file_path = "recorded_audio.webm"
+        file_path = "recorded_audio.mp3"
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
+
+        print(f"Received file: {file.filename}")
+        print(f"Content type: {file.content_type}")
+        print(f"Saved as: {file_path}")
 
         # Prepare for Eleven Labs API
         with open(file_path, "rb") as audio:
             files = {
-                'audio': ('audio.webm', audio, 'audio/webm')
+                'audio': ('audio.mp3', audio, 'audio/mp3')
             }
             headers = {
-                "xi-api-key": ELEVEN_LABS_API_KEY  # Changed from "Authorization"
+                "xi-api-key": ELEVEN_LABS_API_KEY
             }
+            
+            print("Sending to Eleven Labs API...")
             response = requests.post(
                 ELEVEN_LABS_API_ENDPOINT,
                 headers=headers,
@@ -224,6 +230,7 @@ async def upload_audio(file: UploadFile = File(...)):
         if response.status_code == 200:
             transcription_result = response.json()
             text = transcription_result["text"]
+            print("Transcription successful")
 
             # Chunk, embed, and store
             chunks = chunk_text(text)
@@ -235,10 +242,10 @@ async def upload_audio(file: UploadFile = File(...)):
         else:
             print(f"Eleven Labs API Error: Status {response.status_code}")
             print(f"Response: {response.text}")
-            print(f"Headers: {response.headers}")
             return {"filename": file.filename, "error": f"Failed to transcribe audio: {response.status_code} - {response.text}"}
 
     except Exception as e:
+        print(f"Error processing audio: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/generate-response")
