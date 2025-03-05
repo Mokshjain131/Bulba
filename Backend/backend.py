@@ -11,6 +11,7 @@ import faiss
 import numpy as np
 import firecrawl
 import uvicorn
+from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware # Import CORSMiddleware
 
 # Load environment variables
