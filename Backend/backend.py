@@ -14,6 +14,11 @@ import uvicorn
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
 import logging
+from io import BytesIO
+from elevenlabs.client import ElevenLabs
+import os
+from elevenlabs import ElevenLabs
+import tempfile
 
 # Load environment variables
 load_dotenv()
@@ -201,45 +206,51 @@ async def rag_query(query_request: QueryRequest):
 
 @app.post("/upload-audio")
 async def upload_audio(file: UploadFile = File(...)):
-    try:
+    # try:
         # Save the audio file
-        file_path = "recorded_audio.webm"
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        file_path = "recorded_audio.mp3"
 
-        # Prepare for Eleven Labs API
-        with open(file_path, "rb") as audio:
-            files = {
-                'audio': ('audio.webm', audio, 'audio/webm')
-            }
-            headers = {
-                "xi-api-key": ELEVEN_LABS_API_KEY  # Changed from "Authorization"
-            }
-            response = requests.post(
-                ELEVEN_LABS_API_ENDPOINT,
-                headers=headers,
-                files=files
-            )
+        client = ElevenLabs(
+            api_key=os.getenv("ELEVEN_LABS_API_KEY"),
+        )
 
-        if response.status_code == 200:
-            transcription_result = response.json()
-            text = transcription_result["text"]
+        audio_url = (
+            "recorded_audio.mp3"
+        )
+        response = requests.get(audio_url)
+        audio_data = BytesIO(response.content)
 
-            # Chunk, embed, and store
-            chunks = chunk_text(text)
-            for chunk in chunks:
-                embeddings = get_embedding(chunk)
-                supabase_client.table("text_embeddings").insert({"text_chunk": chunk, "embeddings": embeddings}).execute()
+        transcription = client.speech_to_text.convert(
+            file=audio_data,
+            model_id="scribe_v1", # Model to use, for now only "scribe_v1" and "scribe_v1_base" are supported
+            tag_audio_events=True, # Tag audio events like laughter, applause, etc.
+            language_code="eng", # Language of the audio file. If set to None, the model will detect the language automatically.
+            diarize=True, # Whether to annotate who is speaking
+        )
 
-            return {"filename": file.filename, "message": "Transcription and embeddings stored successfully"}
-        else:
-            print(f"Eleven Labs API Error: Status {response.status_code}")
-            print(f"Response: {response.text}")
-            print(f"Headers: {response.headers}")
-            return {"filename": file.filename, "error": f"Failed to transcribe audio: {response.status_code} - {response.text}"}
+        print(transcription.text)
 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+
+
+    #     if response.status_code == 200:
+    #         transcription_result = response.json()
+    #         text = transcription_result["text"]
+
+    #         # Chunk, embed, and store
+    #         chunks = chunk_text(text)
+    #         for chunk in chunks:
+    #             embeddings = get_embedding(chunk)
+    #             supabase_client.table("text_embeddings").insert({"text_chunk": chunk, "embeddings": embeddings}).execute()
+
+    #         return {"filename": file.filename, "message": "Transcription and embeddings stored successfully"}
+    #     else:
+    #         print(f"Eleven Labs API Error: Status {response.status_code}")
+    #         print(f"Response: {response.text}")
+    #         print(f"Headers: {response.headers}")
+    #         return {"filename": file.filename, "error": f"Failed to transcribe audio: {response.status_code} - {response.text}"}
+
+    # except Exception as e:
+    #     raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/generate-response")
 async def generate_response():
