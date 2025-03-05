@@ -22,7 +22,7 @@ const IndexTitleSliding = () => {
         <div className="index-hero-section">
             <div className="index-hero-content">
                 <div className="index-title-area" ref={titleRef}>
-                    <h1 className="index-main-title">Realty Lingo</h1>
+                    <h1 className="index-main-title">RealtyLingo</h1>
                     <p className="index-subtitle">Transforming client interactions with intelligent conversation analysis</p>
                 </div>
                 
