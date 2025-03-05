@@ -12,7 +12,8 @@ import numpy as np
 import firecrawl
 import uvicorn
 from typing import Optional
-from fastapi.middleware.cors import CORSMiddleware # Import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
+import logging
 
 # Load environment variables
 load_dotenv()
@@ -25,7 +26,7 @@ FIRECRAWL_API_ENDPOINT = "https://api.firecrawl.com/v1/search"
 
 # Configure Gemini
 genai.configure(api_key=GOOGLE_API_KEY)
-MODEL = genai.GenerativeModel(
+model = genai.GenerativeModel(
     model_name="gemini-2.0-flash-exp",
     generation_config=None,
     system_instruction="""
@@ -166,7 +167,7 @@ def generate_rag_response(text, query, k=3):
     If the context doesn't contain relevant information, please say so.
     """
 
-    response = MODEL.generate_content(prompt)
+    response = model.generate_content(prompt)
 
     return {
         "query": query,
@@ -249,7 +250,7 @@ async def generate_response():
 
     text = transcription_result["text"]
     prompt = text + "this is the talk between a client and a real estate agent give me bullet points of the key points of the conversation"
-    response = MODEL.generate_content(prompt)
+    response = model.generate_content(prompt)
 
     return {"response": response.text}
 
@@ -267,7 +268,7 @@ async def firecrawl_properties(firecrawl_request: FirecrawlRequest):
     try:
         # Use Gemini to extract location and property type from bullet points
         prompt = f"From the following bullet points: '{firecrawl_request.bullet_points}', extract the location and property type. Format your response exactly like this: 'Location: [location], Property Type: [property_type]'"
-        location_property_response = MODEL.generate_content(prompt)
+        location_property_response = model.generate_content(prompt)
         location_property_text = location_property_response.text
         
         # Improved parsing logic
@@ -297,6 +298,29 @@ def firecrawl_search(query):
     response = requests.get(FIRECRAWL_API_ENDPOINT, headers=headers, params=params)
     return response.json()
 
+@app.post("/ai/")
+async def search(userquery: Request):
+    try:
+        # Parse the incoming request
+        request = await userquery.json()
+        query_text = request.get("query")
+
+        if not query_text:
+            raise HTTPException(status_code=400, detail="Query text is required")
+
+        # Generate response using Gemini
+        response = model.generate_content(query_text)
+
+        # Return the response in a structured format
+        return {
+            "success": True,
+            "response": response.text,
+            "query": query_text
+        }
+
+    except Exception as e:
+        logging.error(f"Error during search: {e}")
+        raise HTTPException(status_code=500, detail=f"Error during search: {str(e)}")
 
 @app.post("/login/")
 async def login(request: Request):

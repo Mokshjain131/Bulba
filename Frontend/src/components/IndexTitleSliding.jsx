@@ -2,51 +2,38 @@ import React, { useEffect, useRef } from "react";
 import '../styles/index.css';
 
 const IndexTitleSliding = () => {
-    const cardsRef = useRef([]);
     const titleRef = useRef(null);
+    const cardRef = useRef(null);
 
     useEffect(() => {
-        // Animation for the title
-        if (titleRef.current) {
-            setTimeout(() => {
-                titleRef.current.classList.add("visible");
-            }, 300);
-        }
+        // Immediately start the animations when component mounts
+        const timer = setTimeout(() => {
+            if (titleRef.current) {
+                titleRef.current.classList.add("slide-in");
+            }
+            if (cardRef.current) {
+                cardRef.current.classList.add("slide-in");
+            }
+        }, 100); // Small delay to ensure DOM is ready
 
-        // Animation for the card
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("visible");
-                    }
-                });
-            },
-            { threshold: 0.3 }
-        );
-
-        cardsRef.current.forEach((card) => {
-            if (card) observer.observe(card);
-        });
-
-        return () => observer.disconnect();
+        return () => clearTimeout(timer);
     }, []);
 
     return (
-        <div className="hero-section">
-            <div className="hero-content">
-                <div className="title-area" ref={titleRef}>
-                    <h1 className="main-title">Real Estate AI</h1>
-                    <p className="subtitle">Transforming client interactions with intelligent conversation analysis</p>
+        <div className="index-hero-section">
+            <div className="index-hero-content">
+                <div className="index-title-area" ref={titleRef}>
+                    <h1 className="index-main-title">Real Estate AI</h1>
+                    <p className="index-subtitle">Transforming client interactions with intelligent conversation analysis</p>
                 </div>
                 
-                <div className="card-area">
-                    <div className="feature-card-hero" ref={(el) => (cardsRef.current[0] = el)}>
+                <div className="index-card-area">
+                    <div className="index-feature-card-hero" ref={cardRef}>
                         <h3>Smart Communication Assistant</h3>
                         <p>Connect with clients in multiple languages, capture key preferences, and get real-time insights to close more deals.</p>
-                        <div className="cta-buttons">
-                            <a href="/chat" className="cta-button primary">Start Now</a>
-                            <a href="/features" className="cta-button secondary">Learn More</a>
+                        <div className="index-cta-buttons">
+                            <a href="/chat" className="index-cta-button index-primary">Start Now</a>
+                            <a href="/features" className="index-cta-button index-secondary">Learn More</a>
                         </div>
                     </div>
                 </div>
