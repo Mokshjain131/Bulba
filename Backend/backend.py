@@ -198,9 +198,8 @@ async def rag_query(query_request: QueryRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
-@app.post("/upload-audio") # Removed unnecessary api_route and set method to POST as default
-async def upload_audio(file: UploadFile = File(...)): # Changed request to UploadFile
-    global transcription_result
+@app.post("/upload-audio")
+async def upload_audio(file: UploadFile = File(...)):
     try:
         # Save the audio file
         file_path = "recorded_audio.webm"
@@ -230,7 +229,7 @@ async def upload_audio(file: UploadFile = File(...)): # Changed request to Uploa
             return {"filename": file.filename, "error": f"Failed to transcribe audio: {response.status_code} - {response.text}"}
 
     except Exception as e:
-        return {"filename": file.filename, "error": f"An error occurred: {str(e)}"}
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/generate-response")
 async def generate_response():
