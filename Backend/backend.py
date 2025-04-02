@@ -14,6 +14,11 @@ import uvicorn
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
 import logging
+from io import BytesIO
+from elevenlabs.client import ElevenLabs
+import os
+from elevenlabs import ElevenLabs
+import tempfile
 
 # Load environment variables
 load_dotenv()
@@ -202,51 +207,91 @@ async def rag_query(query_request: QueryRequest):
 @app.post("/upload-audio")
 async def upload_audio(file: UploadFile = File(...)):
     try:
-        # Save the audio file
-        file_path = "recorded_audio.mp3"
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        # Validate file type (optional but recommended)
+        allowed_content_types = ['audio/webm', 'audio/wav', 'audio/mp3', 'audio/mpeg']
+        if file.content_type not in allowed_content_types:
+            raise HTTPException(status_code=400, detail="Invalid file type. Please upload an audio file.")
 
-        print(f"Received file: {file.filename}")
-        print(f"Content type: {file.content_type}")
-        print(f"Saved as: {file_path}")
+        # Create a temporary file to save the uploaded audio
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as temp_file:
+            shutil.copyfileobj(file.file, temp_file)
+            temp_file_path = temp_file.name
 
-        # Prepare for Eleven Labs API
-        with open(file_path, "rb") as audio:
-            files = {
-                'audio': ('audio.mp3', audio, 'audio/mp3')
-            }
+        # Transcribe audio using Eleven Labs API
+        try:
             headers = {
                 "xi-api-key": ELEVEN_LABS_API_KEY
             }
-            
-            print("Sending to Eleven Labs API...")
-            response = requests.post(
-                ELEVEN_LABS_API_ENDPOINT,
-                headers=headers,
-                files=files
-            )
+            with open(temp_file_path, "rb") as audio_file:
+                files = {"file": audio_file}
+                response = requests.post(
+                    ELEVEN_LABS_API_ENDPOINT, 
+                    headers=headers, 
+                    files=files
+                )
+                response.raise_for_status()
+                transcription = response.json()
 
-        if response.status_code == 200:
-            transcription_result = response.json()
-            text = transcription_result["text"]
-            print("Transcription successful")
+        except requests.exceptions.RequestException as e:
+            # More detailed error handling
+            error_message = f"Transcription failed: {str(e)}"
+            if hasattr(e, 'response'):
+                error_message += f" - {e.response.text}"
+            raise HTTPException(status_code=500, detail=error_message)
 
-            # Chunk, embed, and store
-            chunks = chunk_text(text)
-            for chunk in chunks:
-                embeddings = get_embedding(chunk)
-                supabase_client.table("text_embeddings").insert({"text_chunk": chunk, "embeddings": embeddings}).execute()
+        finally:
+            # Ensure temporary file is always deleted
+            os.unlink(temp_file_path)
 
-            return {"filename": file.filename, "message": "Transcription and embeddings stored successfully"}
+        # Additional processing with Gemini
+        if transcription and 'text' in transcription:
+            # Process the transcribed text
+            text = transcription['text']
+
+            # Optional: Generate key points using Gemini
+            try:
+                prompt = f"Extract key points from this conversation: {text}"
+                key_points_response = model.generate_content(prompt)
+                key_points = key_points_response.text
+            except Exception as e:
+                key_points = "Could not generate key points"
+
+            # Return comprehensive response
+            return {
+                "filename": file.filename,
+                "transcription": transcription,
+                "key_points": key_points
+            }
         else:
-            print(f"Eleven Labs API Error: Status {response.status_code}")
-            print(f"Response: {response.text}")
-            return {"filename": file.filename, "error": f"Failed to transcribe audio: {response.status_code} - {response.text}"}
+            raise HTTPException(status_code=400, detail="No transcription text found")
 
+    except HTTPException:
+        # Re-raise HTTPException to preserve status and details
+        raise
     except Exception as e:
-        print(f"Error processing audio: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        # Catch any unexpected errors
+        logging.error(f"Unexpected error in upload_audio: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {str(e)}")
+
+    #     if response.status_code == 200:
+    #         transcription_result = response.json()
+    #         text = transcription_result["text"]
+
+    #         # Chunk, embed, and store
+    #         chunks = chunk_text(text)
+    #         for chunk in chunks:
+    #             embeddings = get_embedding(chunk)
+    #             supabase_client.table("text_embeddings").insert({"text_chunk": chunk, "embeddings": embeddings}).execute()
+
+    #         return {"filename": file.filename, "message": "Transcription and embeddings stored successfully"}
+    #     else:
+    #         print(f"Eleven Labs API Error: Status {response.status_code}")
+    #         print(f"Response: {response.text}")
+    #         print(f"Headers: {response.headers}")
+    #         return {"filename": file.filename, "error": f"Failed to transcribe audio: {response.status_code} - {response.text}"}
+
+    # except Exception as e:
+    #     raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/generate-response")
 async def generate_response():
@@ -312,6 +357,8 @@ async def search(userquery: Request):
         request = await userquery.json()
         query_text = request.get("query")
 
+        query_text += "this above it the user query regarding real estate suggest different properties and tips regarding real estate"
+
         if not query_text:
             raise HTTPException(status_code=400, detail="Query text is required")
 
@@ -320,7 +367,7 @@ async def search(userquery: Request):
 
         # Return the response in a structured format
         return {
-            "success": True,
+            "success": True, #this is not required as it always returns a 200
             "response": response.text,
             "query": query_text
         }
